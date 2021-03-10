@@ -4,7 +4,6 @@
       <div class="note">
         <h1>Eventiny Admin Side</h1>
       </div>
-
       <div class="form-content">
         <div class="row">
           <div class="col-md-6">
@@ -26,13 +25,17 @@
             </div>
           </div>
         </div>
-        <button
-          type="button"
-          class="btnSubmit"
-          @click="onSubitLogin({ login })"
-        >
-          Submit
-        </button>
+        <div>
+          <button type="button" class="btnSubmit" @click="onSubitLogin(login)">
+            Submit
+          </button>
+        </div>
+        <div class="img">
+          <img
+            class=" medium ui image"
+            src="https://www1.chester.ac.uk/sites/default/files/styles/hero/public/Events%20Management%20festival%20image.jpg?itok=eJ3k-5R6"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -58,6 +61,23 @@ export default {
 <style scoped>
 .row {
   margin: auto;
+}
+.img {
+  position: relative;
+  float: left;
+  max-height: 100%;
+  max-width: 100%;
+  min-width: 2%;
+  min-height: 2%;
+  margin-left: 60%;
+  margin-top: -13%;
+  margin-right: 2%;
+  margin-bottom: 2%;
+
+  opacity: none;
+}
+.form-content {
+  display: block;
 }
 h1 {
   font-family: "Shippori Mincho", serif;
