@@ -1,27 +1,18 @@
-import { AdminEntity } from './admin/admin.entity';
+import { AdminsModule } from './admins/admins.module';
+import { AdminController } from './admins/admin.controller';
+import { AdminsService } from './admins/admins.service';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoginModule } from './login/login.module';
 import { Connection } from 'typeorm';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: 'root',
-      database: 'admin',
-      entities: [AdminEntity],
-      synchronize: true,
-    }),
-    LoginModule,
-  ],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [TypeOrmModule.forRoot(), AuthModule, AdminsModule],
+  controllers: [AppController, AdminController],
+  providers: [AppService, AdminsService],
 })
 export class AppModule {
   constructor(private connection: Connection) {}

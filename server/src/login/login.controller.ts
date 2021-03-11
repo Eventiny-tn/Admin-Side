@@ -1,7 +1,16 @@
-import { AdminFront } from './../admin/admin.entity';
+import { AdminFront } from '../entities/admin/admin.entity';
 import { LoginService } from './login.service';
-import { Body, Controller, Post } from '@nestjs/common';
-import { AdminEntity } from '../admin/admin.entity';
+import {
+  Body,
+  Controller,
+  Post,
+  UseGuards,
+  Request,
+  Get,
+} from '@nestjs/common';
+
+import { Admin } from '../entities/admin/admin.entity';
+
 @Controller('login')
 export class LoginController {
   constructor(private readonly loginService: LoginService) {}

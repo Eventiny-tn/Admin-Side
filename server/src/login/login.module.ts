@@ -1,11 +1,11 @@
-import { AdminEntity } from './../admin/admin.entity';
+import { Admin } from '../entities/admin/admin.entity';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoginController } from './login.controller';
 import { LoginService } from './login.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([AdminEntity])],
+  imports: [TypeOrmModule.forFeature([Admin])],
   controllers: [LoginController],
   providers: [LoginService],
 })

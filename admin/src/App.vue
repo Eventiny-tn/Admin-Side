@@ -1,44 +1,28 @@
 <template>
-  <div>
-    <AdminLogin :onSubitLogin="onSubitLogin" />
-    <AdminDashboad />
+  <div id="nav">
+    <router-view />
   </div>
 </template>
 
-<script>
-import swal from "sweetalert";
-import axios from "axios";
-import VueRouter from "vue-router";
-import AdminLogin from "./components/AdminLogin";
-import AdminDashboad from "./components/AdminDashboard";
-export default {
-  name: "App",
-  data() {
-    return {};
-  },
-  components: {
-    AdminLogin,
-    AdminDashboad,
-  },
+<style scoped>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
 
-  methods: {
-    onSubitLogin(login) {
-      axios
-        .post("http://localhost:3000/login", login)
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-          swal(
-            "Invalid Entries",
-            "Check the username or password please!",
-            "error"
-          );
-        });
-    },
-  },
-};
-</script>
+#nav {
+  padding: 30px;
+}
 
-<style></style>
+#nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+#nav a.router-link-exact-active {
+  color: #42b983;
+}
+</style>

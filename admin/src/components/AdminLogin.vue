@@ -54,8 +54,8 @@ export default {
     onSubitLogin: {
       type: Function,
     },
-    methods: {},
   },
+  methods: {},
 };
 </script>
 <style scoped>
