@@ -27,6 +27,6 @@ export class LoginService {
       }
     }
     // return 'done';
-    throw new Error();
+    return new Error();
   }
 }

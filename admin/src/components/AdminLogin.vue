@@ -95,6 +95,9 @@ h1 {
   border: 1px solid #ced4da;
   margin-bottom: 2%;
 }
+.form {
+  margin-top: 8%;
+}
 .form-control {
   border-radius: 1.5rem;
 }

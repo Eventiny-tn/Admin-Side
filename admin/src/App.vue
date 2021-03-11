@@ -1,12 +1,16 @@
 <template>
   <div>
     <AdminLogin :onSubitLogin="onSubitLogin" />
+    <AdminDashboad />
   </div>
 </template>
 
 <script>
+import swal from "sweetalert";
 import axios from "axios";
+import VueRouter from "vue-router";
 import AdminLogin from "./components/AdminLogin";
+import AdminDashboad from "./components/AdminDashboard";
 export default {
   name: "App",
   data() {
@@ -14,6 +18,7 @@ export default {
   },
   components: {
     AdminLogin,
+    AdminDashboad,
   },
 
   methods: {
@@ -23,7 +28,14 @@ export default {
         .then((res) => {
           console.log(res);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          console.log(err);
+          swal(
+            "Invalid Entries",
+            "Check the username or password please!",
+            "error"
+          );
+        });
     },
   },
 };
