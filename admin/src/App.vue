@@ -18,7 +18,6 @@ export default {
 
   methods: {
     onSubitLogin(login) {
-      console.log("==>", login);
       axios
         .post("http://localhost:3000/login", login)
         .then((res) => {
