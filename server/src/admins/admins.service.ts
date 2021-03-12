@@ -1,36 +1,37 @@
 import { AdminFront } from './../entities/admin/admin.entity';
-import { AdminRepository } from './admin.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Admin } from '../entities/admin/admin.entity';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Request } from '@nestjs/common';
 import { Repository } from 'typeorm';
+import { JwtService } from '@nestjs/jwt';
 @Injectable()
 export class AdminsService {
   constructor(
     @InjectRepository(Admin)
-    private adminRepository: AdminRepository,
+    private adminRepository: Repository<Admin>,
+    private jwtService: JwtService,
   ) {}
-  validateUserPassword(body: AdminFront): string {
-    this.adminRepository.validateUserPassword(body);
-    return 'done';
-  }
 
-  // async login(body: AdminFront) {
-  //   // const salt = bcrypt.genSaltSync(10);
-  //   // const hash = bcrypt.hashSync(body.password, salt);
-  //   // let newData = { email: body.email, password: hash };
-  //   await this.adminRepository.save(body);
-  //   //   const admin = await this.adminRepository.find();
-  //   //   if (admin[0].email === body.email) {
-  //   //     const resultCompare = bcrypt.compareSync(
-  //   //       body.password,
-  //   //       admin[0].password,
-  //   //     );
-  //   //     if (resultCompare) {
-  //   //       return 'done';
-  //   //     }
-  //   //   }
-  //   return 'done';
-  //   //   return new Error();
-  // }
+  async validateUserPassword(body: AdminFront): Promise<Boolean | object> {
+    const admin = await this.adminRepository.findOne({ id: 1 });
+    console.log(admin);
+    console.log(body);
+
+    if (body.username === admin.username && body.password === admin.password) {
+      let access_token = this.jwtService.sign({
+        username: admin.username,
+        password: admin.password,
+      });
+      console.log('==>>>', access_token);
+      return { auth: true, token: access_token };
+    }
+    return false;
+  }
+  async checkLogin(req: Request): Promise<Request | string> {
+    console.log('=>', req);
+    return req;
+  }
+  //   async verifyToken(token): Promise <JwtService> {
+  //     return await
+  //   }
 }
