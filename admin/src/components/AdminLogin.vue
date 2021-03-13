@@ -12,7 +12,7 @@
                 type="text"
                 class="form-control"
                 placeholder="   Admin Email..."
-                v-model="login.email"
+                v-model="login.username"
               />
             </div>
             <div class="form-group">
@@ -45,7 +45,7 @@ export default {
   data() {
     return {
       login: {
-        email: "",
+        username: "",
         password: "",
       },
     };
@@ -54,8 +54,8 @@ export default {
     onSubitLogin: {
       type: Function,
     },
-    methods: {},
   },
+  methods: {},
 };
 </script>
 <style scoped>

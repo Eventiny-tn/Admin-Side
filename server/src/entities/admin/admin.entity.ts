@@ -1,15 +1,16 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-@Entity()
-export class AdminEntity {
+
+@Entity('admin')
+export class Admin {
   @PrimaryGeneratedColumn()
   id: number;
   @Column({ length: 25 })
-  email: string;
+  username: string;
   @Column()
   password: string;
 }
 
 export interface AdminFront {
-  email: string;
+  username: string;
   password: string;
 }

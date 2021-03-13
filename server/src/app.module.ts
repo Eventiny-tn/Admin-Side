@@ -1,27 +1,27 @@
-import { AdminEntity } from './admin/admin.entity';
+import { JwtModule } from '@nestjs/jwt';
+import { jwtConstants } from './auth/constants';
+import { AdminsModule } from './admins/admins.module';
+import { AdminController } from './admins/admin.controller';
+import { AdminsService } from './admins/admins.service';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { LoginModule } from './login/login.module';
 import { Connection } from 'typeorm';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: 'root',
-      database: 'admin',
-      entities: [AdminEntity],
-      synchronize: true,
+    TypeOrmModule.forRoot(),
+    AuthModule,
+    AdminsModule,
+    JwtModule.register({
+      secret: jwtConstants.secret,
+      signOptions: { expiresIn: '10s' },
     }),
-    LoginModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, AdminController],
+  providers: [AppService, AdminsService],
 })
 export class AppModule {
   constructor(private connection: Connection) {}
