@@ -9,11 +9,11 @@
           <div class="logo">
             <a hef="home.html"
               ><img
-                src="https://www.logolynx.com/images/logolynx/39/39b0d0140b1c680414f3922529e95bc0.png"
-                class="hidden-xs hidden-sm"
+                src="https://www.pngkit.com/png/full/138-1385922_digital-analytics-audit-and-strategy-check-cross-country.png"
+                class="hidden-xs hidden-sm "
               />
               <img
-                src="https://www.logolynx.com/images/logolynx/39/39b0d0140b1c680414f3922529e95bc0.png"
+                src="https://www.pngkit.com/png/full/138-1385922_digital-analytics-audit-and-strategy-check-cross-country.png"
                 class="visible-xs visible-sm circle-logo"
               />
             </a>
@@ -265,7 +265,9 @@ ul {
 .home {
   background: #f6f7fa;
 }
-
+.hidden-sm {
+  border-radius: 40%;
+}
 #navigation {
   background: #0e1a35;
 }
