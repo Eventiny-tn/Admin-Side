@@ -28,30 +28,6 @@
               </li>
               <li>
                 <a href="#"
-                  ><i class="fa fa-tasks" aria-hidden="true"></i
-                  ><span class="hidden-xs hidden-sm">Workflow</span></a
-                >
-              </li>
-              <li>
-                <a href="#"
-                  ><i class="fa fa-bar-chart" aria-hidden="true"></i
-                  ><span class="hidden-xs hidden-sm">Statistics</span></a
-                >
-              </li>
-              <li>
-                <a href="#"
-                  ><i class="fa fa-user" aria-hidden="true"></i
-                  ><span class="hidden-xs hidden-sm">Calender</span></a
-                >
-              </li>
-              <li>
-                <a href="#"
-                  ><i class="fa fa-calendar" aria-hidden="true"></i
-                  ><span class="hidden-xs hidden-sm">Users</span></a
-                >
-              </li>
-              <li>
-                <a href="#"
                   ><i class="fa fa-cog" aria-hidden="true"></i
                   ><span class="hidden-xs hidden-sm">Setting</span></a
                 >
@@ -80,21 +56,16 @@
                     </button>
                   </div>
                 </nav>
-                <div class="search hidden-xs hidden-sm">
+                <div class="ui icon input">
                   <input type="text" placeholder="Search" id="search" />
+                  <i class="circular search link icon"></i>
                 </div>
               </div>
-              <div class="col-md-5">
+              <div class="col-md-5" id="notification-container">
                 <div class="header-rightside">
                   <ul class="list-inline header-top pull-right">
                     <li class="hidden-xs">
-                      <a
-                        href="#"
-                        class="add-project"
-                        data-toggle="modal"
-                        data-target="#add_project"
-                        >Add Project</a
-                      >
+                      <a class="add-project" @click="adminLogout()">LOGOUT</a>
                     </li>
                     <li>
                       <a href="#"
@@ -114,9 +85,9 @@
                       <ul class="dropdown-menu">
                         <li>
                           <div class="navbar-content">
-                            <span>JS Krishna</span>
+                            <span>admin</span>
                             <p class="text-muted small">
-                              me@jskrishna.com
+                              fakhri@test.com
                             </p>
                             <div class="divider"></div>
                             <a href="#" class="view btn-sm active"
@@ -132,113 +103,137 @@
             </header>
           </div>
           <div class="user-dashboard">
-            <h1>Admin</h1>
+            <div class="ui  small  circular image">
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYlNJooLrcjz6ROLpzJ_PNgxr2pBRyfiRPPg&usqp=CAU"
+              />
+            </div>
+            <h1 class="ui top aligned  image">Admin</h1>
+
             <div class="row">
               <div class="col-md-5 col-sm-5 col-xs-12 gutter">
                 <div class="sales">
-                  <h2>Your Sale</h2>
-
-                  <div class="btn-group">
-                    <button
-                      class="btn btn-secondary btn-lg dropdown-toggle"
-                      type="button"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      <span>Period:</span> Last Year
-                    </button>
-                    <div class="dropdown-menu">
-                      <a href="#">2012</a>
-                      <a href="#">2014</a>
-                      <a href="#">2015</a>
-                      <a href="#">2016</a>
-                    </div>
-                  </div>
+                  <h2>Pending Requests</h2>
+                </div>
+                <div>
+                  <u>
+                    <li v-for="(event, i) in events" :key="i">
+                      <img
+                        class="ui top aligned tiny image"
+                        src="https://www.designevo.com/res/templates/thumb_small/colorful-fireworks-tube-and-festival.png"
+                      />
+                      <span>Event number: {{ 1 }}</span>
+                      <div>
+                        <button class="ui positive button">
+                          Approve
+                        </button>
+                        <button class="ui negative button">
+                          Decline
+                        </button>
+                      </div>
+                      <div>
+                        <div class="ui list">
+                          <div class="item">
+                            <img
+                              class="ui avatar image"
+                              src="https://www.vhv.rs/dpng/d/583-5831214_cartoon-avatar-png-download-image-gaming-logo-avatar.png"
+                            />
+                            <div class="content">
+                              <a class="header">Fakhri</a>
+                              <div class="description">
+                                has been published
+                                <a><b>New event </b></a> just now.
+                              </div>
+                            </div>
+                            <div>
+                              <a class="ui blue image label">
+                                <img
+                                  src="https://www.pinclipart.com/picdir/middle/289-2897938_discover-ideas-about-beast-logo-clipart.png"
+                                />
+                                Event
+                                <div class="detail">New User</div>
+                              </a>
+                            </div>
+                          </div>
+                          <h12>See details</h12>
+                        </div>
+                      </div>
+                      <div class="ui divider"></div>
+                    </li>
+                  </u>
                 </div>
               </div>
               <div class="col-md-7 col-sm-7 col-xs-12 gutter">
                 <div class="sales report">
-                  <h2>Report</h2>
-                  <div class="btn-group">
-                    <button
-                      class="btn btn-secondary btn-lg dropdown-toggle"
-                      type="button"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      <span>Period:</span> Last Year
-                    </button>
-                    <div class="dropdown-menu">
-                      <a href="#">2012</a>
-                      <a href="#">2014</a>
-                      <a href="#">2015</a>
-                      <a href="#">2016</a>
-                    </div>
-                  </div>
+                  <h2>Users List</h2>
                 </div>
-                <a class="ui blue image label">
-                  <img
-                    src="https://www.pinclipart.com/picdir/middle/289-2897938_discover-ideas-about-beast-logo-clipart.png"
-                  />
-                  Event
-                  <div class="detail">Friend</div>
-                </a>
-                <a class="ui teal image label">
-                  <img
-                    src="https://www.pinclipart.com/picdir/middle/289-2897938_discover-ideas-about-beast-logo-clipart.png"
-                  />
-                  Veronika
-                  <div class="detail">Student</div>
-                </a>
-                <a class="ui yellow image label">
-                  <img
-                    src="https://www.pinclipart.com/picdir/middle/289-2897938_discover-ideas-about-beast-logo-clipart.png"
-                  />
-                  Helen
-                  <div class="detail">Co-worker</div>
-                </a>
+                <div>
+                  <ul>
+                    <li v-for="(event, i) in events" :key="i">
+                      <div
+                        class="ui middle aligned divided animated list"
+                        id="users-list"
+                      >
+                        <div class="item">
+                          <div class="right floated content">
+                            <div class="ui negative button">Ban</div>
+                          </div>
+                          <img
+                            class="ui avatar tiny image"
+                            src="https://www.nopcommerce.com/images/thumbs/0005704_150.jpeg"
+                          />
+                          <div class="content">
+                            event's username
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-
-    <!-- Modal -->
-    <div id="add_project" class="modal fade" role="dialog">
-      <div class="modal-dialog">
-        <button>Log Out</button>
-
-        <!-- Modal content-->
-        <div class="modal-content">
-          <div class="modal-header login-header">
-            <button type="button" class="close" data-dismiss="modal">×</button>
-            <h4 class="modal-title">Add Project</h4>
-          </div>
-          <div class="modal-body">
-            <input type="text" placeholder="Project Title" name="name" />
-            <input type="text" placeholder="Post of Post" name="mail" />
-            <input type="text" placeholder="Author" name="passsword" />
-            <textarea placeholder="Desicrption"></textarea>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="cancel" data-dismiss="modal">
-              Close
-            </button>
-            <button type="button" class="add-project" data-dismiss="modal">
-              Save
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
+<script>
+export default {
+  name: "AdminDashbord",
+  props: {
+    adminLogout: {
+      type: Function,
+    },
+  },
+  data() {
+    return {
+      events: [1, 2, 3, 4, 5, 6],
+    };
+  },
+};
+</script>
 
 <style scoped>
 /*Login Signup Page*/
+.list {
+  float: right !important;
+  margin-top: -16% !important;
+}
+#users-list {
+  float: none !important;
+  margin-top: 0 !important;
+}
+h12 {
+  margin-top: 10%;
+  float: right;
+  cursor: pointer;
+  font-weight: bold;
+}
+h12:hover {
+  color: red;
+  text-decoration: underline;
+}
 a:focus,
 a:hover,
 a {
@@ -251,9 +246,11 @@ ul {
   padding: 0;
   margin: 0;
 }
+
 .header-top i {
   font-size: 18px;
 }
+
 .bg-image {
   background: url("https://www.logolynx.com/images/logolynx/39/39b0d0140b1c680414f3922529e95bc0.png")
     no-repeat 0 0 / cover;
@@ -480,9 +477,13 @@ ul {
   border-radius: 100px;
   color: #ffffff;
   font-size: 14px;
-  font-weight: 600;
-  padding: 10px 27px 10px 45px;
+  padding: 10px;
+  margin-right: 20px;
   position: relative;
+  cursor: pointer;
+}
+.add-project:hover {
+  background-color: aqua;
 }
 
 .header-rightside .nav > li > a:focus,
@@ -572,13 +573,10 @@ ul {
   transition: all 0.5s ease;
 }
 .search input {
-  border: none;
+  border: 1px solid bottom;
   font-size: 15px;
   padding: 15px 9px;
   width: 100%;
-  background: rgba(0, 0, 0, 0)
-    url("https://www.logolynx.com/images/logolynx/39/39b0d0140b1c680414f3922529e95bc0.png")
-    no-repeat scroll 99% 12px;
   color: #8492af;
 }
 

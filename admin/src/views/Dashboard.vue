@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <AdminDashboard />
+    <AdminDashboard :adminLogout="adminLogout" />
   </div>
 </template>
 <script>
@@ -12,6 +12,12 @@ export default {
   name: "Dashboard",
   components: {
     AdminDashboard,
+  },
+  methods: {
+    adminLogout() {
+      localStorage.removeItem("isLogged");
+      this.$router.push("/");
+    },
   },
   beforeMount() {
     const token = localStorage.getItem("isLogged");
