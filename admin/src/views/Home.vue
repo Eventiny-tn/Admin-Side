@@ -22,6 +22,7 @@ export default {
         .then(({ data }) => {
           if (data.auth == true) {
             localStorage.setItem("isLogged", data.token);
+            console.log("before login ", data.token);
             this.$router.push("/Dashboard");
           } else {
             swal(

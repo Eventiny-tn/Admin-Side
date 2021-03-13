@@ -19,14 +19,13 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: JwtPayload): Promise<Admin> {
-    const { username } = payload;
-    const user = await this.repo.findOne({ id: 1 });
+  //   async validate(payload: JwtPayload): Promise<Admin> {
+  //     const { username } = payload;
+  //     const user = await this.repo.findOne({ id: 1 });
 
-    if (!user) {
-      throw new UnauthorizedException();
-    }
-
-    return user;
-  }
+  //     if (!user) {
+  //       throw new UnauthorizedException();
+  //     }
+  //     return user;
+  //   }
 }

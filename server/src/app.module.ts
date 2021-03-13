@@ -17,7 +17,7 @@ import { AuthModule } from './auth/auth.module';
     AdminsModule,
     JwtModule.register({
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '60s' },
+      signOptions: { expiresIn: '10s' },
     }),
   ],
   controllers: [AppController, AdminController],
