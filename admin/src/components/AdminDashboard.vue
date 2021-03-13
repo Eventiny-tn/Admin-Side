@@ -48,6 +48,7 @@
                       data-toggle="offcanvas"
                       data-target="#side-menu"
                       aria-expanded="false"
+                      @click="toggle()"
                     >
                       <span class="sr-only">Toggle navigation</span>
                       <span class="icon-bar"></span>
@@ -103,13 +104,16 @@
             </header>
           </div>
           <div class="user-dashboard">
-            <div class="ui  small  circular image">
-              <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYlNJooLrcjz6ROLpzJ_PNgxr2pBRyfiRPPg&usqp=CAU"
-              />
+            <div id="user-dashboard" class="item">
+              <div class="ui  small  circular image">
+                <img
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYlNJooLrcjz6ROLpzJ_PNgxr2pBRyfiRPPg&usqp=CAU"
+                />
+              </div>
+              <div class="middle aligned content">
+                <h1 class="ui top aligned  image">Admin</h1>
+              </div>
             </div>
-            <h1 class="ui top aligned  image">Admin</h1>
-
             <div class="row">
               <div class="col-md-5 col-sm-5 col-xs-12 gutter">
                 <div class="sales">
@@ -199,6 +203,7 @@
   </div>
 </template>
 <script>
+import $ from "jquery";
 export default {
   name: "AdminDashbord",
   props: {
@@ -211,11 +216,16 @@ export default {
       events: [1, 2, 3, 4, 5, 6],
     };
   },
+  methods: {
+    toggle() {
+      $("#navigation").toggleClass("hidden-xs");
+    },
+    toggleMenu() {},
+  },
 };
 </script>
 
 <style scoped>
-/*Login Signup Page*/
 .list {
   float: right !important;
   margin-top: -16% !important;
@@ -250,176 +260,6 @@ ul {
 .header-top i {
   font-size: 18px;
 }
-
-.bg-image {
-  background: url("https://www.logolynx.com/images/logolynx/39/39b0d0140b1c680414f3922529e95bc0.png")
-    no-repeat 0 0 / cover;
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  display: table;
-}
-
-.login-header {
-  display: inline-block;
-  width: 100%;
-  background: #0e1a35;
-}
-
-.login-signup {
-  display: table-cell;
-  vertical-align: middle;
-  width: 100%;
-}
-
-.login-logo img {
-  cursor: pointer;
-  max-width: 171px;
-  padding: 23px 15px 22px;
-  width: 100%;
-}
-
-.login-header .navbar-right {
-  margin-right: 0px;
-}
-
-.login-header .nav-tabs > li.active > a,
-.login-header .nav-tabs > li.active > a:focus,
-.login-header .nav-tabs > li.active > a:hover {
-  background-color: transparent;
-  border: none;
-  color: #fff;
-}
-
-.login-header .nav-tabs > li > a {
-  border: medium none;
-  border-radius: 0;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 48px;
-  padding: 15px 30px;
-  color: #fff;
-}
-
-.login-header .nav-tabs {
-  border-bottom: none;
-}
-
-.login-header .nav-tabs > li {
-  margin-bottom: 0px;
-}
-
-.login-header .nav > li > a:focus,
-.login-header .nav > li > a:hover {
-  background: none;
-  text-decoration: none;
-}
-
-.login-header .nav-tabs > li.active {
-  border-bottom: 6px solid #5584ff;
-}
-
-.login-inner h1 {
-  color: #8492af;
-  font-size: 48px;
-  font-weight: 300;
-  text-align: center;
-  margin-top: 0;
-  margin-bottom: 20px;
-}
-
-.login-inner h1 span {
-  color: #5584ff;
-}
-
-.login-form {
-  text-align: center;
-}
-
-.login-form input {
-  -moz-border-bottom-colors: none;
-  -moz-border-left-colors: none;
-  -moz-border-right-colors: none;
-  -moz-border-top-colors: none;
-  background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
-  border-color: -moz-use-text-color -moz-use-text-color #d4d9e3;
-  border-image: none;
-  border-style: none none solid;
-  border-width: medium medium 1px;
-  font-size: 13px;
-  font-weight: 300;
-  width: 100%;
-  color: #8492af;
-  padding: 15px 50px;
-  font-size: 17px;
-  max-width: 550px;
-}
-
-.login-form label {
-  margin-bottom: 30px;
-  width: 100%;
-}
-
-.user input {
-  background: rgba(0, 0, 0, 0)
-    url("https://www.logolynx.com/images/logolynx/39/39b0d0140b1c680414f3922529e95bc0.png")
-    no-repeat scroll 7px 12px;
-}
-
-.pass input {
-  background: rgba(0, 0, 0, 0)
-    url("https://www.logolynx.com/images/logolynx/39/39b0d0140b1c680414f3922529e95bc0.png")
-    no-repeat scroll 7px 12px;
-}
-
-.mail input {
-  background: rgba(0, 0, 0, 0)
-    url("https://www.logolynx.com/images/logolynx/39/39b0d0140b1c680414f3922529e95bc0.png")
-    no-repeat scroll 4px 12px;
-}
-
-.login-signup .tab-content {
-  background: #ffffff none repeat scroll 0 0;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.176);
-  display: inline-block;
-  margin-top: -8px;
-  width: 100%;
-}
-
-.form-btn {
-  background: #5584ff none repeat scroll 0 0;
-  border: medium none;
-  border-radius: 100px;
-  color: #ffffff;
-  font-weight: 400;
-  max-width: 250px;
-  padding: 10px 0;
-  position: relative;
-  width: 100%;
-  margin: 40px 0;
-  box-shadow: 0 2px 8px #d2d2d2;
-  -moz-box-shadow: 0 2px 8px #d2d2d2;
-  -webkit-box-shadow: 0 2px 8px #d2d2d2;
-}
-
-.form-btn::before {
-  content: "";
-  font-family: FontAwesome;
-  position: absolute;
-  right: 17px;
-  top: 9px;
-}
-
-.form-details {
-  padding: 35px 0;
-}
-
-.tab-content .tab-pane {
-  padding: 70px 0;
-}
-
-/*Login Signup Page*/
-
 /*Home Page*/
 
 .home {
@@ -463,21 +303,15 @@ ul {
 
 .header-top {
   margin: 0;
-  padding-top: 2px;
-}
-
-.header-top img {
-  border-radius: 50%;
-  max-width: 48px !important;
-  width: 100%;
+  padding-top: 8px;
 }
 
 .add-project {
   background: #5584ff none repeat scroll 0 0;
-  border-radius: 100px;
+  border-radius: 3px;
   color: #ffffff;
   font-size: 14px;
-  padding: 10px;
+  padding: 5px;
   margin-right: 20px;
   position: relative;
   cursor: pointer;
@@ -485,33 +319,6 @@ ul {
 .add-project:hover {
   background-color: aqua;
 }
-
-.header-rightside .nav > li > a:focus,
-.header-rightside .nav > li > a:hover {
-  background: none;
-  text-decoration: none;
-}
-
-.add-project::before {
-  background: rgba(0, 0, 0, 0)
-    url("https://www.logolynx.com/images/logolynx/39/39b0d0140b1c680414f3922529e95bc0.png")
-    no-repeat scroll 0 0;
-  content: "";
-  height: 12px;
-  left: 17px;
-  position: absolute;
-  top: 12px;
-  width: 12px;
-}
-
-.add-project:hover {
-  color: #ffffff;
-}
-
-.header-top i {
-  color: #0e1a35;
-}
-
 .icon-info {
   position: relative;
 }
@@ -533,11 +340,6 @@ ul {
   text-align: center;
 }
 
-.header-top li {
-  display: inline-block;
-  text-align: center;
-}
-
 .header-top .dropdown-toggle {
   color: #0e1a35;
 }
@@ -546,16 +348,6 @@ ul {
   border: medium none;
   left: -85px;
   padding: 17px;
-}
-.view {
-  background: #5584ff none repeat scroll 0 0;
-  border-radius: 100px;
-  color: #ffffff;
-  display: inline-block;
-  font-size: 14px;
-  font-weight: 600;
-  margin-top: 10px;
-  padding: 10px 15px;
 }
 
 .navbar-content > span {
@@ -571,13 +363,6 @@ ul {
   -moz-transition: all 0.5s ease;
   -o-transition: all 0.5s ease;
   transition: all 0.5s ease;
-}
-.search input {
-  border: 1px solid bottom;
-  font-size: 15px;
-  padding: 15px 9px;
-  width: 100%;
-  color: #8492af;
 }
 
 header {
@@ -644,21 +429,11 @@ header {
 .navbar-default .navbar-toggle .icon-bar {
   background-color: #0e1a35;
 }
-
-.circle-logo {
-  margin: 0 auto;
-  max-width: 30px !important;
-  text-align: center;
-}
-.hidden-xs {
-  -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  -o-transition: all 0.5s ease;
-  transition: all 0.5s ease;
-}
-
 .user-dashboard {
   padding: 0 20px;
+}
+#user-dashboard {
+  margin: 1%;
 }
 
 .user-dashboard h1 {
@@ -675,239 +450,8 @@ header {
   padding: 15px;
   width: 100%;
 }
-.sales button {
-  background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
-  border: 1px solid #dadee7;
-  border-radius: 100px;
-  font-size: 15px;
-  letter-spacing: 0.5px;
-  padding-right: 32px;
-  color: #0e1a35;
-}
 
-.sales button::before {
-  content: "";
-  font-family: FontAwesome;
-  position: absolute;
-  right: 12px;
-  top: 11px;
-}
-.sales .btn-group {
-  float: right;
-}
-.sales h2 {
-  color: #8492af;
-  float: left;
-  font-size: 21px;
-  font-weight: 600;
-  margin: 0;
-  padding: 9px 0 0;
-}
-.btn.btn-secondary.btn-lg.dropdown-toggle > span {
-  font-size: 15px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-}
-.sales .dropdown-menu {
-  margin: 0px;
-  padding: 0px;
-  border: 0px;
-  border-radius: 8px;
-  width: 100%;
-  color: #0e1a35;
-}
-.sales .btn-group.open .dropdown-toggle,
-.btn.active,
-.btn:active {
-  box-shadow: none;
-}
-.sales .dropdown-menu > a {
-  color: #0e1a35;
-  display: inline-block;
-  font-weight: 800;
-  padding: 9px 0;
-  text-align: center;
-  width: 100%;
-}
-#my-cool-chart svg {
-  width: 100%;
-}
-.sales .dropdown-menu > a:hover {
-  color: #5584ff;
-}
-.shield-buttons {
-  display: none;
-}
-.close,
-.close:focus,
-.close:hover {
-  color: #fff;
-  opacity: 1;
-  text-shadow: none;
-}
-.modal-body input {
-  border: 1px solid #d4d9e3;
-  font-size: 14px;
-  font-weight: 300;
-  margin: 5px 0;
-  padding: 14px 10px;
-  width: 100%;
-  color: #8492af;
-}
-.modal-body textarea {
-  border: 1px solid #d4d9e3;
-  font-size: 14px;
-  font-weight: 300;
-  height: 200px;
-  margin-top: 5px;
-  padding: 9px 10px;
-  width: 100%;
-  color: #8492af;
-}
-/* .modal-header.login-header h4 {
-    color: #ffffff;
-} */
-.modal-footer .add-project {
-  background: #5584ff none repeat scroll 0 0;
-  border: medium none;
-  border-radius: 100px;
-  color: #ffffff;
-  font-size: 14px;
-  font-weight: 600;
-  padding: 10px 30px;
-  position: relative;
-}
-.modal-footer .add-project::before {
-  display: none;
-}
-.modal-footer {
-  border: 0 none;
-  padding: 10px 15px 26px;
-  text-align: right;
-}
-.cancel {
-  background: #0e1a35;
-  border: medium none;
-  border-radius: 100px;
-  color: #ffffff;
-  font-size: 14px;
-  font-weight: 600;
-  padding: 10px 30px;
-  position: relative;
-}
-.modal {
-  top: 20%;
-}
-.modal-header .close {
-  margin-top: 2px;
-}
-.search input:focus {
-  border-bottom: 1px solid #bdc4d4;
-  line-height: 22px;
-  transition: 0.1s all;
-}
-.modal-header.login-header {
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  /*Main CSS*/
-}
-
-@media only screen and (max-device-width: 767px) {
-  .login-logo img {
-    margin: 0 auto;
-  }
-  .login-details .nav-tabs > li {
-    text-align: center;
-    width: 50%;
-  }
-  .login-signup .login-inner h1 {
-    font-size: 26px;
-    margin-bottom: 0;
-    margin-top: 10px;
-  }
-  .login-inner .login-form input {
-    font-size: 15px;
-    max-width: 100%;
-    padding: 15px 45px;
-  }
-  .login-inner .form-details {
-    padding: 25px;
-  }
-  .login-inner .login-form label {
-    margin-bottom: 20px;
-    width: 100%;
-  }
-  .login-inner .form-btn {
-    margin: 0;
-    max-width: 180px;
-  }
-  .tab-content .tab-pane {
-    padding: 20px 0;
-  }
-  #navigation .navi a {
-    font-size: 14px;
-    padding: 20px;
-    text-align: center;
-  }
-  #navigation .navi i {
-    margin-right: 0px;
-  }
-  #navigation .navi a:hover,
-  #navigation .navi .active a {
-    background: #122143 none repeat scroll 0 0;
-    border-left: none;
-    display: block;
-    padding-left: 20px;
-  }
-  header .header-top img {
-    max-width: 38px !important;
-  }
-  .v-align header {
-    padding: 12px 15px;
-  }
-  header .header-top li {
-    padding-left: 13px;
-    padding-right: 6px;
-  }
-  .navbar-default .navbar-toggle {
-    border-color: rgba(0, 0, 0, 0);
-  }
-  .navbar-header .navbar-toggle {
-    float: left;
-    margin: 0;
-    padding: 0;
-    top: 12px;
-  }
-  button,
-  html [type="button"],
-  [type="reset"],
-  [type="submit"] {
-    outline: medium none;
-  }
-  .user-dashboard .sales h2 {
-    color: #8492af;
-    float: left;
-    font-size: 14px;
-    font-weight: 600;
-    margin: 0;
-    padding: 13px 0 0;
-  }
-  .user-dashboard .btn.btn-secondary.btn-lg.dropdown-toggle > span {
-    font-size: 11px;
-  }
-  .user-dashboard .sales button {
-    font-size: 11px;
-    padding-right: 23px;
-  }
-  .user-dashboard .sales h2 {
-    font-size: 12px;
-  }
-  .gutter {
-    padding: 0;
-  }
-}
-
-@media only screen and (max-device-width: 992px) {
+@media only screen and (max-device-width: 1024px) {
   header .header-top li {
     padding-left: 20px !important;
     padding-right: 0;
@@ -917,13 +461,12 @@ header {
   }
 }
 
-@media only screen and (min-device-width: 767px) and (max-device-width: 998px) {
+@media only screen and (min-device-width: 900) and (max-device-width: 1024px) {
   .user-dashboard .header-top {
     padding-top: 5px;
   }
   .user-dashboard .header-rightside {
     display: inline-block;
-    /* float: left; */
     width: 100%;
   }
   .user-dashboard .header-rightside .header-top img {
