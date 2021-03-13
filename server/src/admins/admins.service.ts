@@ -36,7 +36,6 @@ export class AdminsService {
         token,
         jwtConstants,
       );
-      // return { succes: true, token: token };
       if (verifyingTokenExpiring) {
         console.log(verifyingTokenExpiring);
         const admin = await this.adminRepository.findOne({ id: 1 });

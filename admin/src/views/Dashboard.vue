@@ -13,7 +13,7 @@ export default {
   components: {
     AdminDashboard,
   },
-  mounted() {
+  beforeMount() {
     const token = localStorage.getItem("isLogged");
     console.log("token on mounted==>", token);
     const config = {

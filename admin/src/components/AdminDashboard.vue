@@ -178,6 +178,27 @@
                     </div>
                   </div>
                 </div>
+                <a class="ui blue image label">
+                  <img
+                    src="https://www.pinclipart.com/picdir/middle/289-2897938_discover-ideas-about-beast-logo-clipart.png"
+                  />
+                  Event
+                  <div class="detail">Friend</div>
+                </a>
+                <a class="ui teal image label">
+                  <img
+                    src="https://www.pinclipart.com/picdir/middle/289-2897938_discover-ideas-about-beast-logo-clipart.png"
+                  />
+                  Veronika
+                  <div class="detail">Student</div>
+                </a>
+                <a class="ui yellow image label">
+                  <img
+                    src="https://www.pinclipart.com/picdir/middle/289-2897938_discover-ideas-about-beast-logo-clipart.png"
+                  />
+                  Helen
+                  <div class="detail">Co-worker</div>
+                </a>
               </div>
             </div>
           </div>
@@ -188,6 +209,8 @@
     <!-- Modal -->
     <div id="add_project" class="modal fade" role="dialog">
       <div class="modal-dialog">
+        <button>Log Out</button>
+
         <!-- Modal content-->
         <div class="modal-content">
           <div class="modal-header login-header">
