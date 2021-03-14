@@ -2,7 +2,7 @@
   <div class="container register-form">
     <div class="form">
       <div class="note">
-        <h1>Eventiny Admin Side</h1>
+        <h3 class="my-heading">Eventiny<span class="bg-main">TN</span></h3>
       </div>
       <div class="form-content">
         <div class="row">
@@ -27,15 +27,15 @@
         </div>
         <div>
           <button type="button" class="btnSubmit" @click="onSubitLogin(login)">
-            Submit
+            Login
           </button>
         </div>
-        <div class="img">
+        <!-- <div class="img">
           <img
             class=" medium ui image"
             src="https://www1.chester.ac.uk/sites/default/files/styles/hero/public/Events%20Management%20festival%20image.jpg?itok=eJ3k-5R6"
           />
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -78,14 +78,19 @@ export default {
 }
 .form-content {
   display: block;
+  border-radius: 1%;
 }
 h1 {
-  font-family: "Shippori Mincho", serif;
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-size: 50px;
+  color: white;
+  padding: 1%;
 }
 .note {
   text-align: center;
   height: 80px;
-  background: -webkit-linear-gradient(left, #0072ff, #8811c5);
+  background: #293250;
   color: #fff;
   font-weight: bold;
   line-height: 80px;
@@ -94,6 +99,7 @@ h1 {
   padding: 5%;
   border: 1px solid #ced4da;
   margin-bottom: 2%;
+  background-color: none;
 }
 .form {
   margin-top: 8%;
@@ -102,15 +108,32 @@ h1 {
   border-radius: 1.5rem;
 }
 .btnSubmit {
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
+  font-size: 15px;
+  margin-left: 2%;
   border: none;
   border-radius: 1.5rem;
   padding: 1%;
   width: 20%;
   cursor: pointer;
-  background: #0062cc;
-  color: #fff;
+  background: #293250;
+  color: white;
 }
+h3.my-heading {
+  padding: 1%;
+  font-family: "Kaushan Script", cursive;
+  color: #fff;
+  font-weight: bold;
+  font-size: 40px;
+  margin: 0;
+}
+span.bg-main {
+  color: #008ba3;
+}
+
 .btnSubmit:hover {
-  background-color: #8811c5;
+  background-color: #008ba3;
+  color: #ffd55a;
 }</style
 >>>
