@@ -2,7 +2,7 @@
   <div class="container register-form">
     <div class="form">
       <div class="note">
-        <h1>Eventiny Admin Side</h1>
+        <h3 class="my-heading">Eventiny<span class="bg-main">TN</span></h3>
       </div>
       <div class="form-content">
         <div class="row">
@@ -117,11 +117,23 @@ h1 {
   padding: 1%;
   width: 20%;
   cursor: pointer;
-  background: #ffd55a;
-  color: black;
+  background: #293250;
+  color: white;
 }
+h3.my-heading {
+  padding: 1%;
+  font-family: "Kaushan Script", cursive;
+  color: #fff;
+  font-weight: bold;
+  font-size: 40px;
+  margin: 0;
+}
+span.bg-main {
+  color: #008ba3;
+}
+
 .btnSubmit:hover {
-  background-color: #293250;
+  background-color: #008ba3;
   color: #ffd55a;
 }</style
 >>>

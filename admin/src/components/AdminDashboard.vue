@@ -172,7 +172,7 @@
                   <h2>Users List</h2>
                 </div>
                 <div>
-                  <ul>
+                  <ul id="list-of-users">
                     <li v-for="(event, i) in events" :key="i">
                       <div
                         class="ui middle aligned divided animated list"
@@ -243,6 +243,9 @@ h12 {
 h12:hover {
   color: red;
   text-decoration: underline;
+}
+#list-of-users {
+  margin-top: 5px;
 }
 a:focus,
 a:hover,
