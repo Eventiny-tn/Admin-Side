@@ -5,6 +5,7 @@ import { Admin } from '../entities/admin/admin.entity';
 import { Injectable, NotFoundException, Request } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
 @Injectable()
 export class AdminsService {
   constructor(
@@ -17,8 +18,8 @@ export class AdminsService {
     const admin = await this.adminRepository.findOne({ id: 1 });
     console.log(admin);
     console.log(body);
-
-    if (body.username === admin.username && body.password === admin.password) {
+    const pass = bcrypt.compareSync(body.password, admin.password);
+    if (pass) {
       let access_token = this.jwtService.sign({
         username: admin.username,
         password: admin.password,
@@ -27,7 +28,20 @@ export class AdminsService {
     }
     return false;
   }
+  // uncommint this function whenever you want to signup for admin and comment the validateUserPassword
 
+  // async validateUserPassword(body: AdminFront): Promise<Boolean | object> {
+  //   const saltRounds = 10;
+  //   const salt = bcrypt.genSaltSync(saltRounds);
+  //   const hash = bcrypt.hashSync(body.password, salt);
+  //   body.password = hash;
+  //   console.log(body);
+
+  //   await this.adminRepository.save(body);
+  //   return { success: true };
+  // }
+
+  // ------------------------------------------------------------------------------------------------------
   async checkLogin(Authorization: String): Promise<object | Error> {
     const token = Authorization.split(' ')[1];
 
@@ -47,6 +61,24 @@ export class AdminsService {
       }
     } else {
       return new NotFoundException('NOT FOUND');
+    }
+  }
+
+  async updatePassword(body): Promise<Error | string> {
+    const admin = await this.adminRepository.findOne({ id: 1 });
+    const checkedPass = bcrypt.compareSync(
+      body.current_password,
+      admin.password,
+    );
+    if (checkedPass) {
+      const saltRounds = 10;
+      const salt = bcrypt.genSaltSync(saltRounds);
+      const hash = bcrypt.hashSync(body.new_password, salt);
+      body.new_password = hash;
+      await this.adminRepository.update(1, { password: hash });
+      return 'done';
+    } else {
+      return new NotFoundException('INVALID ENTRIES');
     }
   }
 }
