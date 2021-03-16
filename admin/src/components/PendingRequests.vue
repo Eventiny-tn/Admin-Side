@@ -3,7 +3,7 @@
     <div class="container">
       <h2 class="text-center">Pending Requests</h2>
 
-      <div class="card">
+      <div class="card" v-for="(event, i) in events" :key="i">
         <div class="card-body">
           <div class="row">
             <div class="col-md-2">
@@ -66,7 +66,7 @@ export default {
   },
   data() {
     return {
-      events: [1, 2, 3, 4, 5],
+      events: [1, 2, 3, 4, 5, 6, 8, 9],
     };
   },
 };

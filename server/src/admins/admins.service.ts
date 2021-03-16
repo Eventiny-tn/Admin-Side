@@ -81,4 +81,21 @@ export class AdminsService {
       return new NotFoundException('INVALID ENTRIES');
     }
   }
+  async uploadPictureProfile(image): Promise<Error | string> {
+    console.log(image);
+    if (image) {
+      await this.adminRepository.update(1, { imageUrl: image.image });
+      return 'done';
+    } else {
+      return new NotFoundException('INVALID ENTRIES');
+    }
+  }
+
+  async adminImg(req): Promise<Error | object> {
+    console.log(req);
+
+    const img = await this.adminRepository.findOne(1);
+
+    return { image: img.imageUrl };
+  }
 }
