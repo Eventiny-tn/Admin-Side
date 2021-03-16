@@ -13,27 +13,83 @@
               ><i class="glyphicon glyphicon-lock"></i> Change Password</a
             >
           </li>
-          <li>
-            <a href="" data-target-id="settings"
-              ><i class="glyphicon glyphicon-cog"></i> Update Profile</a
-            >
-          </li>
         </ul>
-      </div>
-      <div>
-        <img
-          class="active medium ui image"
-          src="https://www.beautymentor.in/admin/uploads/profile/admin.png"
-        />
       </div>
 
       <div class="col-md-9  admin-content" id="profile">
+        <div class="ui unstackable items">
+          <div class="item">
+            <div class="image">
+              <img
+                :src="
+                  imageUrl
+                    ? imageUrl
+                    : 'https://i1.sndcdn.com/artworks-000205545703-y08l8k-t500x500.jpg'
+                "
+              />
+            </div>
+            <div class="content">
+              <a class="header">{{ data.username }}</a>
+              <div class="meta">
+                <div class="ui list">
+                  <div class="item">
+                    <i class="mail icon"></i>
+                    <div class="content">
+                      <a href="">{{ data.email }}</a>
+                    </div>
+                  </div>
+                </div>
+                <span>Bio</span>
+              </div>
+              <div class="description">
+                <p></p>
+                <div class="ui list">
+                  <div class="item">
+                    <i class="map marker icon"></i>
+                    <div class="content">
+                      <a class="header">{{ data.fullName }}</a>
+                      <div class="description"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="extra">
+                Additional Details
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="panel panel-info" style="margin: 1em;">
           <div class="panel-heading">
-            <h3 class="panel-title">Name</h3>
+            <h3 class="panel-title">Update your Picture</h3>
+            <div class="ui placeholder segment">
+              <div class="ui icon header">
+                <i class="cloud upload icon"></i>
+              </div>
+              <div class="inline">
+                <input
+                  class="ui button"
+                  type="file"
+                  id="file"
+                  ref="file"
+                  v-on:change="handleFileUpload()"
+                />
+                <!--  -->
+
+                <div class="ui button" @click="uploadPictureToDataBase()">
+                  Upload Picture
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="panel-heading">
+            <h3 class="panel-title">Username</h3>
           </div>
           <div class="panel-body">
-            admin
+            <div class="ui input focus">
+              <input type="text" placeholder="Username..." v-model="username" />
+            </div>
           </div>
         </div>
         <div class="panel panel-info" style="margin: 1em;">
@@ -41,60 +97,35 @@
             <h3 class="panel-title">Email</h3>
           </div>
           <div class="panel-body">
-            admin@test.com
+            <div class="ui input focus">
+              <input
+                type="email"
+                placeholder="email..."
+                name="email"
+                v-model="email"
+              />
+            </div>
           </div>
         </div>
         <div class="panel panel-info" style="margin: 1em;">
           <div class="panel-heading">
-            <h3 class="panel-title">Last Password Change</h3>
+            <h3 class="panel-title">Full Name</h3>
           </div>
           <div class="panel-body">
-            4 days Ago
+            <div class="ui input focus" id="form-btn">
+              <input
+                type="text"
+                placeholder="Full name..."
+                name="fullName"
+                v-model="fullName"
+              />
+            </div>
           </div>
         </div>
-      </div>
-      <div class="col-md-9  admin-content" id="settings">
-        <div class="panel panel-info" style="margin: 1em;">
-          <div class="panel-heading">
-            <h3 class="panel-title">Notification</h3>
-          </div>
-          <div class="panel-body">
-            <div class="label label-success">allowed</div>
-          </div>
-        </div>
-        <div class="panel panel-info" style="margin: 1em;">
-          <div class="panel-heading">
-            <h3 class="panel-title">Newsletter</h3>
-          </div>
-          <div class="panel-body">
-            <div class="badge">Monthly</div>
-          </div>
-        </div>
-
-        <div class="panel panel-info" style="margin: 1em;">
-          <div class="panel-heading">
-            <h3 class="panel-title">Admin</h3>
-          </div>
-          <div class="panel-body">
-            <div class="label label-success">yes</div>
-          </div>
-        </div>
-      </div>
-      <div class="ui placeholder segment">
-        <div class="ui icon header">
-          <i class="cloud upload icon"></i>
-        </div>
-        <div class="inline">
-          <input
-            class="ui button"
-            type="file"
-            id="file"
-            ref="file"
-            v-on:change="handleFileUpload()"
-          />
-          <div class="ui button" @click="uploadPic()">
-            Upload Picture
-          </div>
+        <div style="margin: 1em;" @click="onSubmitUpdateInfo()">
+          <button class="ui button" id="submit-update-info">
+            Update
+          </button>
         </div>
       </div>
 
@@ -189,8 +220,6 @@
           </div>
         </form>
       </div>
-
-      <div class="col-md-9  admin-content" id="settings"></div>
     </div>
   </div>
 </template>
@@ -198,23 +227,6 @@
 import $ from "jquery";
 import axios from "axios";
 import swal from "sweetalert";
-
-$(document).ready(function() {
-  var navItems = $(".admin-menu li > a");
-  var navListItems = $(".admin-menu li");
-  var allWells = $(".admin-content");
-  var allWellsExceptFirst = $(".admin-content:not(:first)");
-  allWellsExceptFirst.hide();
-  navItems.click(function() {
-    navListItems.removeClass("active");
-    $(this)
-      .closest("li")
-      .addClass("active");
-    allWells.hide();
-    var target = $(this).attr("data-target-id");
-    $("#" + target).show();
-  });
-});
 
 export default {
   name: "setting",
@@ -225,27 +237,64 @@ export default {
   },
   data() {
     return {
+      data: [],
       current_password: "",
       new_password: "",
       confirm_password: "",
-      file: "",
+      file: null,
+      imageUrl: "",
+      fullName: "",
+      username: "",
+      email: "",
     };
   },
   methods: {
+    // loadTextFromFile(ev) {
+    //   const file = ev.target.files[0];
+    //   const reader = new FileReader();
+
+    //   reader.onload = (e) => this.$emit("load", e.target.result);
+    //   reader.readAsDataURL(file).then((t) => console.log(t));
+    //   // console.log("==>",);
+    // },
+    onSubmitUpdateInfo() {
+      console.log("clicked");
+      if (this.$data.fullName && this.$data.username && this.$data.email) {
+        axios
+          .put("http://localhost:3000/admin/updateData", {
+            fullName: this.$data.fullName,
+            username: this.$data.username,
+            email: this.$data.email,
+          })
+          .then(({ data }) => console.log(data))
+          .catch((err) => console.log(err));
+      }
+    },
     handleFileUpload() {
       this.file = this.$refs.file.files[0];
+
       console.log(this.file);
+      // Change the src attribute of the image to path
+
       const image = new FormData();
       image.append("file", this.file);
       image.append("upload_preset", "lwsk5njh");
-      console.log(image);
       axios
         .post("https://api.cloudinary.com/v1_1/daakldabl/image/upload", image)
         .then(({ data }) => {
-          console.log("upload", data);
           console.log("imageId", data.url);
+          this.$data.imageUrl = data.url;
+          console.log("===>", this.$data.imageUrl);
         })
         .catch((err) => console.log(err));
+    },
+    uploadPictureToDataBase() {
+      if (this.$data.imageUrl) {
+        axios
+          .post("http://localhost:3000/admin/1", { image: this.$data.imageUrl })
+          .then(({ data }) => console.log(data));
+      }
+      console.log("clicked");
     },
     updatePass() {
       if (this.$data.new_password == this.$data.confirm_password) {
@@ -268,9 +317,50 @@ export default {
       }
     },
   },
+
+  mounted() {
+    this.$nextTick(
+      $(document).ready(function() {
+        var navItems = $(".admin-menu li > a");
+        var navListItems = $(".admin-menu li");
+        var allWells = $(".admin-content");
+        var allWellsExceptFirst = $(".admin-content:not(:first)");
+        allWellsExceptFirst.hide();
+        navItems.click(function(e) {
+          e.preventDefault();
+          navListItems.removeClass("active");
+          $(this)
+            .closest("li")
+            .addClass("active");
+          allWells.hide();
+          var target = $(this).attr("data-target-id");
+          $("#" + target).show();
+        });
+      })
+    ),
+      axios
+        .get("http://localhost:3000/admin/img")
+        .then(({ data }) => {
+          this.$data.data = data;
+          this.$data.imageUrl = data.imageUrl;
+          console.log(data);
+        })
+        .catch((err) => console.log(err));
+  },
 };
 </script>
 <style scoped>
+.form-btn {
+  margin-left: 10px;
+}
+.button {
+  margin-left: 20px;
+}
+#submit-update-info {
+  font-size: 20px;
+  float: right !important;
+  position: relative;
+}
 .panel-info {
   background-color: white;
 }

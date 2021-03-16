@@ -128,7 +128,6 @@
 import UsersList from "./UsersList.vue";
 import PendingRequests from "./PendingRequests.vue";
 import Setting from "./Setting.vue";
-import $ from "jquery";
 export default {
   name: "AdminDashboard",
   components: {
@@ -155,48 +154,6 @@ export default {
     settingsView() {
       this.$data.view = 2;
     },
-    dropDownAdmin() {
-      var navItems = $(".admin-menu li > a");
-      var navListItems = $(".admin-menu li");
-      var allWells = $(".admin-content");
-      var allWellsExceptFirst = $(".admin-content:not(:first)");
-      allWellsExceptFirst.toggle();
-      navItems.click(function() {
-        navListItems.removeClass("active");
-        $(this)
-          .closest("li")
-          .addClass("active");
-        allWells.hide();
-        $(this)
-          .attr("data-target-id")
-          .show();
-      });
-      console.log("clicked");
-    },
-  },
-
-  mounted() {
-    this.$nextTick(
-      $(function() {
-        $('[data-toggle="tooltip"]').tooltip();
-        $(".side-nav .collapse").on("hide.bs.collapse", function() {
-          $(this)
-            .prev()
-            .find(".fa")
-            .eq(1)
-            .removeClass("fa-angle-right")
-            .addClass("fa-angle-down");
-        });
-        $(".side-nav .collapse").on("show.bs.collapse", function() {
-          $(this)
-            .prev()
-            .find(".fa")
-            .eq(1)
-            .removeClass("fa-angle-down")
-            .addClass("fa-angle-right");
-        });
-      })
-    );
   },
 };
 </script>
@@ -382,6 +339,9 @@ export default {
   display: block;
   white-space: nowrap;
   border-bottom: 1px solid #f4f4f4;
+}
+.navbar-right {
+  margin-right: 60px;
 }
 .navbar-nav > .messages-menu > .dropdown-menu li .menu > li > a > h4 {
   padding: 0;

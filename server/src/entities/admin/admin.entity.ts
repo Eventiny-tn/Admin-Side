@@ -12,6 +12,8 @@ export class Admin {
   imageUrl: string;
   @Column()
   email: string;
+  @Column()
+  fullName: string;
 }
 
 export interface AdminFront {

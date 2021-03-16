@@ -81,4 +81,31 @@ export class AdminsService {
       return new NotFoundException('INVALID ENTRIES');
     }
   }
+  async uploadPictureProfile(image): Promise<Error | string> {
+    console.log(image);
+    if (image) {
+      await this.adminRepository.update(1, { imageUrl: image.image });
+      return 'done';
+    } else {
+      return new NotFoundException('INVALID ENTRIES');
+    }
+  }
+
+  async adminImg(req): Promise<Error | object> {
+    console.log(req);
+
+    const img = await this.adminRepository.findOne(1);
+
+    return img;
+  }
+
+  async updateInfo(body: object): Promise<Error | object | string> {
+    if (body) {
+      console.log(body);
+
+      await this.adminRepository.update(1, body);
+      return 'created';
+    }
+    return new NotFoundException('INVALID ENTRIES');
+  }
 }
