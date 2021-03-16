@@ -8,6 +8,10 @@ export class Admin {
   username: string;
   @Column()
   password: string;
+  @Column()
+  imageUrl: string;
+  @Column()
+  email: string;
 }
 
 export interface AdminFront {

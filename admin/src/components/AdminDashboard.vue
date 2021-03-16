@@ -1,497 +1,639 @@
 <template>
-  <div class="home">
-    <div class="container-fluid display-table">
-      <div class="row display-table-row">
-        <div
-          class="col-md-2 col-sm-1 hidden-xs display-table-cell v-align box"
-          id="navigation"
-        >
-          <div class="logo">
-            <a hef="home.html"
-              ><img
-                src="https://www.pngkit.com/png/full/138-1385922_digital-analytics-audit-and-strategy-check-cross-country.png"
-                class="hidden-xs hidden-sm "
-              />
-              <img
-                src="https://www.pngkit.com/png/full/138-1385922_digital-analytics-audit-and-strategy-check-cross-country.png"
-                class="visible-xs visible-sm circle-logo"
-              />
-            </a>
-          </div>
-          <div class="navi">
-            <ul>
-              <li class="active">
-                <a href="#"
-                  ><i class="fa fa-home" aria-hidden="true"></i
-                  ><span class="hidden-xs hidden-sm">Home</span></a
-                >
-              </li>
-              <li>
-                <a href="#"
-                  ><i class="fa fa-cog" aria-hidden="true"></i
-                  ><span class="hidden-xs hidden-sm">Setting</span></a
-                >
-              </li>
-            </ul>
-          </div>
+  <div>
+    <div id="throbber" style="display:none; min-height:120px;"></div>
+    <div id="noty-holder"></div>
+    <div id="wrapper">
+      <!-- Navigation -->
+      <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button
+            type="button"
+            class="navbar-toggle"
+            data-toggle="collapse"
+            data-target=".navbar-ex1-collapse"
+          >
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
         </div>
-        <div class="col-md-10 col-sm-11 display-table-cell v-align">
-          <!--<button type="button" class="slide-toggle">Slide Toggle</button> -->
-          <div class="row">
-            <header>
-              <div class="col-md-7">
-                <nav class="navbar-default pull-left">
-                  <div class="navbar-header">
-                    <button
-                      type="button"
-                      class="navbar-toggle collapsed"
-                      data-toggle="offcanvas"
-                      data-target="#side-menu"
-                      aria-expanded="false"
-                      @click="toggle()"
-                    >
-                      <span class="sr-only">Toggle navigation</span>
-                      <span class="icon-bar"></span>
-                      <span class="icon-bar"></span>
-                      <span class="icon-bar"></span>
-                    </button>
+        <!-- Top Menu Items -->
+        <ul class="nav navbar-right top-nav">
+          <li class="dropdown" id="option">
+            <span class="option"
+              ><span class="label label-success bg-success">10</span>
+              <i class="bell outline icon"> </i>
+            </span>
+            <div class="dropdown-content">
+              <div class="ui very relaxed list">
+                <div class="item">
+                  <img
+                    class="ui avatar image"
+                    src="https://www.hip-hop.tn/persons/16.jpg"
+                  />
+                  <div class="content">
+                    <a class="header">Daniel Louise</a>
+                    <div class="description">
+                      Last seen watching
+                      <a><b>Arrested Development</b></a> just now.
+                    </div>
                   </div>
-                </nav>
-                <div class="ui icon input">
-                  <input type="text" placeholder="Search" id="search" />
-                  <i class="circular search link icon"></i>
                 </div>
               </div>
-              <div class="col-md-5" id="notification-container">
-                <div class="header-rightside">
-                  <ul class="list-inline header-top pull-right">
-                    <li class="hidden-xs">
-                      <a class="add-project" @click="adminLogout()">LOGOUT</a>
-                    </li>
-                    <li>
-                      <a href="#"
-                        ><i class="fa fa-envelope" aria-hidden="true"></i
-                      ></a>
-                    </li>
-                    <li>
-                      <a href="#" class="icon-info">
-                        <i class="fa fa-bell" aria-hidden="true"></i>
-                        <span class="label label-primary">3</span>
-                      </a>
-                    </li>
-                    <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown"
-                        ><i class="ui tasks icon"></i>> <b class="caret"></b
-                      ></a>
-                      <ul class="dropdown-menu">
-                        <li>
-                          <div class="navbar-content">
-                            <span>admin</span>
-                            <p class="text-muted small">
-                              fakhri@test.com
-                            </p>
-                            <div class="divider"></div>
-                            <a href="#" class="view btn-sm active"
-                              >View Profile</a
-                            >
-                          </div>
-                        </li>
-                      </ul>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </header>
-          </div>
-          <div class="user-dashboard">
-            <div id="user-dashboard" class="item">
-              <div class="ui  small  circular image">
-                <img
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYlNJooLrcjz6ROLpzJ_PNgxr2pBRyfiRPPg&usqp=CAU"
-                />
-              </div>
-              <div class="middle aligned content">
-                <h1 class="ui top aligned  image">Admin</h1>
-              </div>
+              <a href="#">See All notifications</a>
             </div>
-            <div class="row">
-              <div class="col-md-5 col-sm-5 col-xs-12 gutter">
-                <div class="sales">
-                  <h2>Pending Requests</h2>
-                </div>
-                <div>
-                  <u>
-                    <li v-for="(event, i) in events" :key="i">
-                      <img
-                        class="ui top aligned tiny image"
-                        src="https://www.designevo.com/res/templates/thumb_small/colorful-fireworks-tube-and-festival.png"
-                      />
-                      <span>Event number: {{ 1 }}</span>
-                      <div>
-                        <button class="ui positive button">
-                          Approve
-                        </button>
-                        <button class="ui negative button">
-                          Decline
-                        </button>
-                      </div>
-                      <div>
-                        <div class="ui list">
-                          <div class="item">
-                            <img
-                              class="ui avatar image"
-                              src="https://www.vhv.rs/dpng/d/583-5831214_cartoon-avatar-png-download-image-gaming-logo-avatar.png"
-                            />
-                            <div class="content">
-                              <a class="header">Fakhri</a>
-                              <div class="description">
-                                has been published
-                                <a><b>New event </b></a> just now.
-                              </div>
-                            </div>
-                            <div>
-                              <a class="ui blue image label">
-                                <img
-                                  src="https://www.pinclipart.com/picdir/middle/289-2897938_discover-ideas-about-beast-logo-clipart.png"
-                                />
-                                Event
-                                <div class="detail">New User</div>
-                              </a>
-                            </div>
-                          </div>
-                          <h12>See details</h12>
-                        </div>
-                      </div>
-                      <div class="ui divider"></div>
-                    </li>
-                  </u>
-                </div>
-              </div>
-              <div class="col-md-7 col-sm-7 col-xs-12 gutter">
-                <div class="sales report">
-                  <h2>Users List</h2>
-                </div>
-                <div>
-                  <ul id="list-of-users">
-                    <li v-for="(event, i) in events" :key="i">
-                      <div
-                        class="ui middle aligned divided animated list"
-                        id="users-list"
-                      >
-                        <div class="item">
-                          <div class="right floated content">
-                            <div class="ui negative button">Ban</div>
-                          </div>
-                          <img
-                            class="ui avatar tiny image"
-                            src="https://www.nopcommerce.com/images/thumbs/0005704_150.jpeg"
-                          />
-                          <div class="content">
-                            event's username
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+          </li>
+          <li class="dropdown" id="option">
+            <span class="option">
+              Options <i class="chevron down icon"> </i>
+            </span>
+            <div class="dropdown-content">
+              <a @click.prevent="settingsView()"
+                ><i class="fa fa-fw fa-user"></i> Edit Profile</a
+              >
+              <div></div>
+
+              <a @click.prevent="logout()"
+                ><i class="fa fa-fw fa-power-off"></i> Logout</a
+              >
+              <div></div>
+              <a @click.prevent="settingsView()"
+                ><i class="fa fa-fw fa-cog"></i>Password</a
+              >
             </div>
-          </div>
+          </li>
+        </ul>
+        <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+          <ul class="nav navbar-nav side-nav">
+            <li>
+              <div class="user-panel">
+                <div class="pull-left image">
+                  <img
+                    src="https://i1.sndcdn.com/artworks-000205545703-y08l8k-t500x500.jpg"
+                    class="rounded-circle"
+                    alt="User Image"
+                  />
+                </div>
+                <div class="pull-left info">
+                  <p>Admin</p>
+                  <a href="#"
+                    ><i class="fa fa-circle text-success"></i> Online</a
+                  >
+                </div>
+              </div>
+            </li>
+            <li @click.prevent="pendingRequestsView()">
+              <a><i class="ui briefcase icon"></i>Pending Requests</a>
+            </li>
+            <li @click.prevent="userListView()">
+              <a><i class="ui briefcase icon"></i>Users List</a>
+            </li>
+            <li @click.prevent="settingsView()">
+              <a><i class="fa fa-fw fa fa-question-circle"></i>Settings</a>
+            </li>
+          </ul>
         </div>
+        <!-- /.navbar-collapse -->
+      </nav>
+
+      <div id="page-wrapper">
+        <div class="container-fluid">
+          <!-- Page Heading -->
+          <div class="row" id="main">
+            <div class="col-sm-12 col-md-12 well" id="content">
+              <div v-if="view === 0">
+                <PendingRequests :logout="logout" />
+              </div>
+              <div v-if="view === 1">
+                <UsersList :logout="logout" />
+              </div>
+              <div v-if="view === 2">
+                <Setting :logout="logout" />
+              </div>
+            </div>
+          </div>
+          <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
       </div>
+      <!-- /#page-wrapper -->
     </div>
+    <!-- /#wrapper -->
   </div>
 </template>
 <script>
+import UsersList from "./UsersList.vue";
+import PendingRequests from "./PendingRequests.vue";
+import Setting from "./Setting.vue";
 import $ from "jquery";
 export default {
-  name: "AdminDashbord",
-  props: {
-    adminLogout: {
-      type: Function,
-    },
+  name: "AdminDashboard",
+  components: {
+    PendingRequests,
+    UsersList,
+    Setting,
   },
   data() {
     return {
-      events: [1, 2, 3, 4, 5, 6],
+      view: 0,
     };
   },
   methods: {
-    toggle() {
-      $("#navigation").toggleClass("hidden-xs");
+    logout() {
+      localStorage.removeItem("isLogged");
+      this.$router.push("/");
     },
-    toggleMenu() {},
+    pendingRequestsView() {
+      this.$data.view = 0;
+    },
+    userListView() {
+      this.$data.view = 1;
+    },
+    settingsView() {
+      this.$data.view = 2;
+    },
+    dropDownAdmin() {
+      var navItems = $(".admin-menu li > a");
+      var navListItems = $(".admin-menu li");
+      var allWells = $(".admin-content");
+      var allWellsExceptFirst = $(".admin-content:not(:first)");
+      allWellsExceptFirst.toggle();
+      navItems.click(function() {
+        navListItems.removeClass("active");
+        $(this)
+          .closest("li")
+          .addClass("active");
+        allWells.hide();
+        $(this)
+          .attr("data-target-id")
+          .show();
+      });
+      console.log("clicked");
+    },
+  },
+
+  mounted() {
+    this.$nextTick(
+      $(function() {
+        $('[data-toggle="tooltip"]').tooltip();
+        $(".side-nav .collapse").on("hide.bs.collapse", function() {
+          $(this)
+            .prev()
+            .find(".fa")
+            .eq(1)
+            .removeClass("fa-angle-right")
+            .addClass("fa-angle-down");
+        });
+        $(".side-nav .collapse").on("show.bs.collapse", function() {
+          $(this)
+            .prev()
+            .find(".fa")
+            .eq(1)
+            .removeClass("fa-angle-down")
+            .addClass("fa-angle-right");
+        });
+      })
+    );
   },
 };
 </script>
-
 <style scoped>
-.list {
-  float: right !important;
-  margin-top: -16% !important;
+@import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css");
+@import url("https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700");
+@media (min-width: 768px) {
+  body {
+    font-size: 14px;
+    color: #333;
+    list-style: 26px;
+    font-family: "Roboto", sans-serif;
+  }
 }
-#users-list {
-  float: none !important;
-  margin-top: 0 !important;
-}
-h12 {
-  margin-top: 10%;
-  float: right;
-  cursor: pointer;
-  font-weight: bold;
-}
-h12:hover {
-  color: red;
-  text-decoration: underline;
-}
-#list-of-users {
-  margin-top: 5px;
-}
-a:focus,
-a:hover,
-a {
-  outline: none;
-  text-decoration: none;
-}
-li,
-ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.header-top i {
-  font-size: 18px;
-}
-/*Home Page*/
-
-.home {
-  background: #f6f7fa;
-}
-.hidden-sm {
-  border-radius: 40%;
-}
-#navigation {
-  background: #0e1a35;
-}
-
-#navigation {
-  padding: 0;
-}
-
-.display-table {
-  display: table;
-  padding: 0;
-  height: 100%;
-  width: 100%;
-}
-
-.display-table-row {
-  display: table-row;
-  height: 100%;
-}
-
-.display-table-cell {
-  display: table-cell;
-  float: none;
-  height: 100%;
-}
-
-.v-align {
-  vertical-align: top;
-}
-.logo img {
-  max-width: 180px;
-  padding: 16px 0 17px;
-  width: 100%;
-}
-
-.header-top {
-  margin: 0;
-  padding-top: 8px;
-}
-
-.add-project {
-  background: #5584ff none repeat scroll 0 0;
-  border-radius: 3px;
-  color: #ffffff;
-  font-size: 14px;
-  padding: 5px;
-  margin-right: 20px;
+.dropdown {
   position: relative;
-  cursor: pointer;
-}
-.add-project:hover {
-  background-color: aqua;
-}
-.icon-info {
-  position: relative;
-}
-.navi i {
-  font-size: 20px;
-}
-.label.label-primary {
-  border-radius: 50%;
-  font-size: 9px;
-  left: 8px;
-  position: absolute;
-  top: -9px;
-}
-
-.icon-info .label {
-  border: 2px solid #ffffff;
-  font-weight: 500;
-  padding: 3px 5px;
-  text-align: center;
-}
-
-.header-top .dropdown-toggle {
-  color: #0e1a35;
-}
-
-.header-top .dropdown-menu {
-  border: medium none;
-  left: -85px;
-  padding: 17px;
-}
-
-.navbar-content > span {
-  font-size: 13px;
-  font-weight: 700;
-}
-
-.img-responsive {
-  width: 100%;
-}
-#navigation {
-  -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  -o-transition: all 0.5s ease;
-  transition: all 0.5s ease;
-}
-
-header {
-  background: #ffffff none repeat scroll 0 0;
-  box-shadow: 0 1px 12px rgba(0, 0, 0, 0.04);
-  display: inline-block !important;
-  line-height: 23px;
-  padding: 15px;
-  transition: all 0.5s ease 0s;
-  width: 100%;
-  -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  -o-transition: all 0.5s ease;
-  transition: all 0.5s ease;
-}
-
-.logo {
-  text-align: center;
-}
-
-.navi a {
-  border-bottom: 1px solid #0d172e;
-  border-top: 1px solid #0d172e;
-  color: #ffffff;
-  display: block;
-  font-size: 17px;
-  font-weight: 500;
-  padding: 28px 20px;
-  text-decoration: none;
-}
-
-.navi i {
-  margin-right: 15px;
-  color: #5584ff;
-}
-
-.navi .active a {
-  background: #122143;
-  border-left: 5px solid #5584ff;
-  padding-left: 15px;
-}
-
-.navi a:hover {
-  background: #122143 none repeat scroll 0 0;
-  border-left: 5px solid #5584ff;
-  display: block;
-  padding-left: 15px;
-}
-
-.navbar-default {
-  background-color: #ffffff;
-  border-color: #ffffff;
-}
-
-.navbar-toggle {
-  border: none;
-}
-
-.navbar-default .navbar-toggle:focus,
-.navbar-default .navbar-toggle:hover {
-  background-color: rgba(0, 0, 0, 0);
-}
-
-.navbar-default .navbar-toggle .icon-bar {
-  background-color: #0e1a35;
-}
-.user-dashboard {
-  padding: 0 20px;
-}
-#user-dashboard {
-  margin: 1%;
-}
-
-.user-dashboard h1 {
-  color: #0e1a35;
-  font-size: 30px;
-  font-weight: 500;
-  margin: 0;
-  padding: 21px 0;
-}
-.sales {
-  background: #ffffff none repeat scroll 0 0;
-  border: 1px solid #d4d9e3;
   display: inline-block;
-  padding: 15px;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  padding: 12px 16px;
+  z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+.sidebar {
+  width: 220px;
+  background-color: #000;
+  transition: all 0.5s ease-in-out;
+}
+.bg-defoult {
+  background-color: #222;
+}
+.sidebar ul {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+}
+.sidebar li a,
+.sidebar li a.collapsed.active {
+  display: block;
+  padding: 8px 12px;
+  color: #fff;
+  border-left: 0px solid #dedede;
+  text-decoration: none;
+}
+.sidebar li a.active {
+  background-color: #000;
+  border-left: 5px solid #dedede;
+  transition: all 0.5s ease-in-out;
+}
+.sidebar li a:hover {
+  background-color: #000 !important;
+}
+.sidebar li a i {
+  padding-right: 5px;
+}
+.sidebar ul li .sub-menu li a {
+  position: relative;
+}
+.sidebar ul li .sub-menu li a:before {
+  font-family: FontAwesome;
+  content: "\f105";
+  display: inline-block;
+  padding-left: 0px;
+  padding-right: 10px;
+  vertical-align: middle;
+}
+.sidebar ul li .sub-menu li a:hover:after {
+  content: "";
+  position: absolute;
+  left: -5px;
+  top: 0;
+  width: 5px;
+  background-color: #111;
+  height: 100%;
+}
+.sidebar ul li .sub-menu li a:hover {
+  background-color: #222;
+  padding-left: 20px;
+  transition: all 0.5s ease-in-out;
+}
+.sub-menu {
+  border-left: 5px solid #dedede;
+}
+.sidebar li a .nav-label,
+.sidebar li a .nav-label + span {
+  transition: all 0.5s ease-in-out;
+}
+
+.sidebar.fliph li a .nav-label,
+.sidebar.fliph li a .nav-label + span {
+  display: none;
+  transition: all 0.5s ease-in-out;
+}
+.sidebar.fliph {
+  width: 42px;
+  transition: all 0.5s ease-in-out;
+}
+
+.sidebar.fliph li {
+  position: relative;
+}
+.sidebar.fliph .sub-menu {
+  position: absolute;
+  left: 39px;
+  top: 0;
+  background-color: #222;
+  width: 150px;
+  z-index: 100;
+}
+/**** */
+.header .navbar-light .navbar-nav .nav-link {
+  color: #fff;
+}
+.fliph .user-panel {
+  display: none;
+}
+.header .navbar-light .navbar-nav .nav-link:hover,
+.header .navbar-light .navbar-nav .nav-link:focus {
+  background: rgba(0, 0, 0, 0.1);
+  color: #f6f6f6;
+}
+.header .fa.fa-fw.fa-bars {
+  color: #fff;
+}
+.header .navbar-light .navbar-nav .nav-link {
+  color: #fff;
+  padding: 10px 20px;
+  position: relative;
+}
+.header li > a > .label {
+  position: absolute;
+  top: 9px;
+  right: 7px;
+  text-align: center;
+  font-size: 9px;
+  padding: 2px 3px;
+  line-height: 0.9;
+  background-color: #333;
+  border-radius: 0.25em;
+}
+.header li > a:after {
+  display: none;
+}
+
+.header-ul {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  background-color: #ffffff;
+  padding: 7px 10px;
+  border-bottom: 1px solid #f4f4f4;
+  color: #333;
+  font-size: 14px;
+}
+
+.navbar-nav > .notifications-menu > .dropdown-menu,
+.navbar-nav > .messages-menu > .dropdown-menu,
+.navbar-nav > .tasks-menu > .dropdown-menu {
+  width: 280px;
+  padding: 0 0 0 0;
+  margin: 0;
+  top: 100%;
+}
+.navbar-nav > .messages-menu > .dropdown-menu li .menu > li > a > div > img {
+  margin: auto 10px auto auto;
+  width: 40px;
+  height: 40px;
+}
+.navbar-nav > .messages-menu > .dropdown-menu li .menu > li > a,
+.navbar-nav > .notifications-menu > .dropdown-menu li .menu > li > a {
+  margin: 0;
+  padding: 10px 10px;
+  display: block;
+  white-space: nowrap;
+  border-bottom: 1px solid #f4f4f4;
+}
+.navbar-nav > .messages-menu > .dropdown-menu li .menu > li > a > h4 {
+  padding: 0;
+  margin: 0 0 0 45px;
+  color: #333;
+  font-size: 15px;
+  position: relative;
+}
+.navbar-nav > .messages-menu > .dropdown-menu li .menu > li > a > p {
+  margin: 0 0 0 45px;
+  font-size: 12px;
+  color: #888888;
+}
+
+.footer-ul a {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  font-size: 12px;
+  background-color: #fff;
+  padding: 7px 10px;
+  border-bottom: 1px solid #eeeeee;
+  color: #333;
+  display: block;
+}
+a:hover {
+  text-decoration: none;
+}
+.dropdown-menu-over .menu {
+  max-height: 200px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-x: hidden;
+}
+.option {
+  display: block;
+  margin: 5px;
+  background-color: none;
+  color: white;
+}
+#option {
+  margin-top: 18px;
+}
+.navbar-nav > .notifications-menu > .dropdown-menu li .menu > li > a {
+  color: #444444;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 10px;
+}
+.navbar-nav
+  > .notifications-menu
+  > .dropdown-menu
+  li
+  .menu
+  > li
+  > a
+  > .glyphicon,
+.navbar-nav > .notifications-menu > .dropdown-menu li .menu > li > a > .fa,
+.navbar-nav > .notifications-menu > .dropdown-menu li .menu > li > a > .ion {
+  width: 20px;
+}
+
+a.navbar-brand {
+  width: 165px;
+}
+.header .dropdown-menu {
+  position: absolute;
+  right: 0;
+  left: auto;
+  border-radius: 0px;
+}
+.user-panel {
+  clear: left;
+  display: block;
+  float: left;
+}
+.user-panel > .image > img {
   width: 100%;
+  max-width: 45px;
+  height: auto;
+}
+.user-panel > .info,
+.user-panel > .info > a {
+  color: #fff;
+}
+.user-panel > .info > p {
+  font-weight: 600;
+  margin-bottom: 9px;
+}
+.user-panel {
+  clear: left;
+  display: block;
+  float: left;
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 25px 15px;
+  border-bottom: 1px solid;
+}
+.user-panel > .info {
+  padding: 5px 5px 5px 15px;
+  line-height: 1;
+  position: absolute;
+  left: 55px;
 }
 
-@media only screen and (max-device-width: 1024px) {
-  header .header-top li {
-    padding-left: 20px !important;
-    padding-right: 0;
+.fliph .user-panel {
+  display: none;
+}
+#wrapper {
+  padding-left: 0;
+}
+#main {
+  margin-top: 5em;
+}
+
+#page-wrapper {
+  width: 100%;
+  padding: 0;
+  background-color: #fff;
+}
+
+@media (min-width: 768px) {
+  #wrapper {
+    padding-left: 225px;
   }
-  header .logo img {
-    max-width: 125px !important;
+
+  #page-wrapper {
+    padding: 22px 10px;
+  }
+}
+#content {
+  display: block;
+  justify-content: center;
+}
+
+/* Top Navigation */
+
+.top-nav {
+  padding: 0 15px;
+}
+
+.top-nav > li {
+  display: inline-block;
+  float: left !important;
+}
+
+.top-nav > li > a {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  line-height: 20px;
+  color: #fff;
+}
+
+.top-nav > li > a:hover,
+.top-nav > li > a:focus,
+.top-nav > .open > a,
+.top-nav > .open > a:hover,
+.top-nav > .open > a:focus {
+  color: #fff;
+  background-color: #1a242f;
+}
+li {
+  cursor: pointer;
+}
+.top-nav > .open > .dropdown-menu {
+  float: left;
+  position: absolute;
+  margin-top: 0;
+  /*border: 1px solid rgba(0,0,0,.15);*/
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  background-color: #fff;
+  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+}
+
+.top-nav > .open > .dropdown-menu > li > a {
+  white-space: normal;
+}
+
+/* Side Navigation */
+
+@media (min-width: 768px) {
+  .side-nav {
+    position: fixed;
+    top: 60px;
+    left: 225px;
+    width: 225px;
+    margin-left: -225px;
+    border: none;
+    border-radius: 0;
+    border-top: 1px rgba(0, 0, 0, 0.5) solid;
+    overflow-y: auto;
+    background-color: #222;
+    /*background-color: #5A6B7D;*/
+    bottom: 0;
+    overflow-x: hidden;
+    padding-bottom: 40px;
+  }
+
+  .side-nav > li > a {
+    width: 225px;
+    border-bottom: 1px rgba(0, 0, 0, 0.3) solid;
+  }
+
+  .side-nav li a:hover,
+  .side-nav li a:focus {
+    outline: none;
+    background-color: #1a242f !important;
   }
 }
 
-@media only screen and (min-device-width: 900) and (max-device-width: 1024px) {
-  .user-dashboard .header-top {
-    padding-top: 5px;
-  }
-  .user-dashboard .header-rightside {
-    display: inline-block;
-    width: 100%;
-  }
-  .user-dashboard .header-rightside .header-top img {
-    max-width: 41px !important;
-  }
-  .user-dashboard .sales button {
-    font-size: 10px;
-  }
-  .user-dashboard .btn.btn-secondary.btn-lg.dropdown-toggle > span {
-    font-size: 12px;
-  }
-  .user-dashboard .sales h2 {
-    font-size: 15px;
-  }
+.side-nav > li > ul {
+  padding: 0;
+  border-bottom: 1px rgba(0, 0, 0, 0.3) solid;
 }
-@media only screen and (min-device-width: 998px) and (max-device-width: 1350px) {
-  #navigation .logo img {
-    max-width: 130px;
-    padding: 16px 0 17px;
-    width: 100%;
-  }
+
+.side-nav > li > ul > li > a {
+  display: block;
+  padding: 10px 15px 10px 38px;
+  text-decoration: none;
+  /*color: #999;*/
+  color: #fff;
 }
-</style>
+
+.side-nav > li > ul > li > a:hover {
+  color: #fff;
+}
+
+.navbar .nav > li > a > .label {
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  position: absolute;
+  top: 14px;
+  right: 6px;
+  font-size: 10px;
+  font-weight: normal;
+  min-width: 15px;
+  min-height: 15px;
+  line-height: 1em;
+  text-align: center;
+  padding: 2px;
+}
+
+.navbar .nav > li > a:hover > .label {
+  top: 10px;
+}
+
+.navbar-brand {
+  padding: 5px 15px;
+}</style
+>>
