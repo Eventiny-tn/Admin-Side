@@ -29,13 +29,13 @@
               />
             </div>
             <div class="content">
-              <a class="header">Admin</a>
+              <a class="header">{{ data.username }}</a>
               <div class="meta">
                 <div class="ui list">
                   <div class="item">
                     <i class="mail icon"></i>
                     <div class="content">
-                      <a href="">admin@test.com</a>
+                      <a href="">{{ data.email }}</a>
                     </div>
                   </div>
                 </div>
@@ -47,11 +47,8 @@
                   <div class="item">
                     <i class="map marker icon"></i>
                     <div class="content">
-                      <a class="header">Krolewskie Jadlo</a>
-                      <div class="description">
-                        An excellent polish restaurant, quick delivery and
-                        hearty, filling meals.
-                      </div>
+                      <a class="header">{{ data.fullName }}</a>
+                      <div class="description"></div>
                     </div>
                   </div>
                 </div>
@@ -78,6 +75,8 @@
                   ref="file"
                   v-on:change="handleFileUpload()"
                 />
+                <!--  -->
+
                 <div class="ui button" @click="uploadPictureToDataBase()">
                   Upload Picture
                 </div>
@@ -85,11 +84,11 @@
             </div>
           </div>
           <div class="panel-heading">
-            <h3 class="panel-title">Name</h3>
+            <h3 class="panel-title">Username</h3>
           </div>
           <div class="panel-body">
             <div class="ui input focus">
-              <input type="text" placeholder="Name..." value="Admin" />
+              <input type="text" placeholder="Username..." v-model="username" />
             </div>
           </div>
         </div>
@@ -102,7 +101,8 @@
               <input
                 type="email"
                 placeholder="email..."
-                value="admin@test.com"
+                name="email"
+                v-model="email"
               />
             </div>
           </div>
@@ -116,12 +116,13 @@
               <input
                 type="text"
                 placeholder="Full name..."
-                value="admin amdin"
+                name="fullName"
+                v-model="fullName"
               />
             </div>
           </div>
         </div>
-        <div style="margin: 1em;">
+        <div style="margin: 1em;" @click="onSubmitUpdateInfo()">
           <button class="ui button" id="submit-update-info">
             Update
           </button>
@@ -236,30 +237,56 @@ export default {
   },
   data() {
     return {
+      data: [],
       current_password: "",
       new_password: "",
       confirm_password: "",
-      file: "",
+      file: null,
       imageUrl: "",
+      fullName: "",
+      username: "",
+      email: "",
     };
   },
   methods: {
+    // loadTextFromFile(ev) {
+    //   const file = ev.target.files[0];
+    //   const reader = new FileReader();
+
+    //   reader.onload = (e) => this.$emit("load", e.target.result);
+    //   reader.readAsDataURL(file).then((t) => console.log(t));
+    //   // console.log("==>",);
+    // },
+    onSubmitUpdateInfo() {
+      console.log("clicked");
+      if (this.$data.fullName && this.$data.username && this.$data.email) {
+        axios
+          .put("http://localhost:3000/admin/updateData", {
+            fullName: this.$data.fullName,
+            username: this.$data.username,
+            email: this.$data.email,
+          })
+          .then(({ data }) => console.log(data))
+          .catch((err) => console.log(err));
+      }
+    },
     handleFileUpload() {
       this.file = this.$refs.file.files[0];
+
       console.log(this.file);
+      // Change the src attribute of the image to path
+
       const image = new FormData();
       image.append("file", this.file);
       image.append("upload_preset", "lwsk5njh");
-      console.log("this image )==>", image);
-      // this.$data.imageUrl = this.file;
-      // axios
-      //   .post("https://api.cloudinary.com/v1_1/daakldabl/image/upload", image)
-      //   .then(({ data }) => {
-      //     console.log("imageId", data.url);
-      // this.$data.imageUrl = data.url;
-      //     console.log("===>", this.$data.imageUrl);
-      //   })
-      //   .catch((err) => console.log(err));
+      axios
+        .post("https://api.cloudinary.com/v1_1/daakldabl/image/upload", image)
+        .then(({ data }) => {
+          console.log("imageId", data.url);
+          this.$data.imageUrl = data.url;
+          console.log("===>", this.$data.imageUrl);
+        })
+        .catch((err) => console.log(err));
     },
     uploadPictureToDataBase() {
       if (this.$data.imageUrl) {
@@ -314,7 +341,8 @@ export default {
       axios
         .get("http://localhost:3000/admin/img")
         .then(({ data }) => {
-          this.$data.imageUrl = data.image;
+          this.$data.data = data;
+          this.$data.imageUrl = data.imageUrl;
           console.log(data);
         })
         .catch((err) => console.log(err));

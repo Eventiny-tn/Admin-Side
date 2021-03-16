@@ -96,6 +96,16 @@ export class AdminsService {
 
     const img = await this.adminRepository.findOne(1);
 
-    return { image: img.imageUrl };
+    return img;
+  }
+
+  async updateInfo(body: object): Promise<Error | object | string> {
+    if (body) {
+      console.log(body);
+
+      await this.adminRepository.update(1, body);
+      return 'created';
+    }
+    return new NotFoundException('INVALID ENTRIES');
   }
 }

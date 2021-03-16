@@ -8,6 +8,7 @@ import {
   Param,
   Patch,
   Post,
+  Put,
   Req,
 } from '@nestjs/common';
 
@@ -29,14 +30,19 @@ export class AdminController {
   validateUserPassword(@Body() body: AdminFront): Object {
     return this.adminsService.validateUserPassword(body);
   }
+  @Post(':id')
+  uploadPictureProfile(@Body() image: string): Promise<object | string> {
+    return this.adminsService.uploadPictureProfile(image);
+  }
   @Patch()
   updatePassword(@Body() body: object): Promise<object | string> {
     console.log('====>>>>', body);
 
     return this.adminsService.updatePassword(body);
   }
-  @Post(':id')
-  uploadPictureProfile(@Body() image: string): Promise<object | string> {
-    return this.adminsService.uploadPictureProfile(image);
+
+  @Put('updateData')
+  updateInfo(@Body() body: object): Promise<object | string> {
+    return this.adminsService.updateInfo(body);
   }
 }
