@@ -14,9 +14,9 @@ export class Category {
   name: string;
   @Column()
   image: string;
-  @Column()
+  @Column({ type: 'text' })
   description: string;
-  @Column()
+  @Column({ default: false })
   event_id: number;
 
   @ManyToMany(() => Events)

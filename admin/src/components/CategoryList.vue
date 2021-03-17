@@ -1,26 +1,84 @@
 <template>
   <div class="col-md-7 col-sm-7 col-xs-12 gutter">
     <div class="sales report">
-      <h2>Users List</h2>
+      <div class="category-container">
+        <h2>Users List</h2>
+        <div
+          class="ui right dividing rail"
+          v-if="viewForm === false"
+          @click.prevent="displayAddCategory()"
+        >
+          <div class="ui gray button" id="btn-add">
+            Add category
+          </div>
+        </div>
+      </div>
     </div>
     <div>
       <ul id="list-of-users">
-        <li v-for="(event, i) in events" :key="i">
-          <div class="ui middle aligned divided animated list" id="users-list">
-            <div class="item">
-              <div class="right floated content">
-                <span class="ui basic button">Report 0</span>
-                <div class="ui negative button">Ban</div>
+        <li>
+          <!-- form for adding a category -->
+          <div v-if="viewForm == true">
+            <div class="container">
+              <div class="row">
+                <h4 class="text-center">New Category</h4>
+
+                <input
+                  placeholder="Name of the category"
+                  type="text"
+                  required
+                  v-model="name"
+                />
+
+                <input
+                  placeholder="discription"
+                  type="text"
+                  required
+                  v-model="description"
+                />
+                <input
+                  placeholder="image"
+                  type="file"
+                  id="file"
+                  ref="file"
+                  v-on:change="handleFileUpload()"
+                  required
+                  :v-model="image"
+                />
               </div>
-              <img
-                class="ui avatar tiny image"
-                src="https://direct.rhapsody.com/imageserver/images/alb.464778309/500x500.jpg"
-              />
+              <button class="ui button" @click="onSubmitCategory()">
+                Submit
+              </button>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="ui divider"></div>
+        </li>
+        <li v-for="(element, i) in data" :key="i">
+          <div class="ui items ">
+            <div class="item">
+              <div class="image">
+                <img :src="element.image" />
+              </div>
               <div class="content">
-                username's
+                <a class="header">{{ element.name }}</a>
+
+                <div
+                  class="right floated content"
+                  @click.prevent="deleteById(element.id)"
+                >
+                  <button class="ui negative button">
+                    Delete
+                  </button>
+                </div>
+                <div class="extra">
+                  {{ element.description }}
+                </div>
               </div>
             </div>
           </div>
+          <div></div>
         </li>
       </ul>
     </div>
@@ -28,15 +86,132 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
+  props: {
+    data: {
+      type: Object,
+    },
+    getCategoryList: {
+      type: Function,
+    },
+  },
   data() {
     return {
       events: [1, 2, 3, 4, 5],
+      viewForm: false,
+      name: "",
+      description: "",
+      image: "",
     };
+  },
+  methods: {
+    deleteById(id) {
+      console.log("clicked", id);
+      axios.delete("http://localhost:3000/category/" + id).then(({ data }) => {
+        console.log(data);
+        this.getCategoryList();
+      });
+    },
+    displayAddCategory() {
+      this.$data.viewForm = true;
+    },
+    onSubmitCategory() {
+      if (
+        this.$data.name !== "" &&
+        this.$data.description !== "" &&
+        this.$data.image !== ""
+      ) {
+        axios
+          .post("http://localhost:3000/category", {
+            name: this.$data.name,
+            description: this.$data.description,
+            image: this.$data.image,
+          })
+          .then(({ data }) => {
+            console.log(data);
+            this.getCategoryList();
+            this.$data.viewForm = false;
+          });
+      }
+    },
+    handleFileUpload() {
+      this.file = this.$refs.file.files[0];
+
+      console.log(this.file);
+      // Change the src attribute of the image to path
+
+      const image = new FormData();
+      image.append("file", this.file);
+      image.append("upload_preset", "lwsk5njh");
+      axios
+        .post("https://api.cloudinary.com/v1_1/daakldabl/image/upload", image)
+        .then(({ data }) => {
+          console.log("imageId", data.url);
+          this.$data.image = data.url;
+          console.log("===>", this.$data.image);
+        })
+        .catch((err) => console.log(err));
+    },
   },
 };
 </script>
 <style scoped>
+input {
+  margin: 40px 25px;
+  width: 200px;
+  display: block;
+  border: none;
+  padding: 10px 0;
+  border-bottom: solid 1px #1abc9c;
+  -webkit-transition: all 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
+  transition: all 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
+  background: -webkit-linear-gradient(
+    top,
+    rgba(255, 255, 255, 0) 96%,
+    #1abc9c 4%
+  );
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0) 96%,
+    #1abc9c 4%
+  );
+  background-position: -200px 0;
+  background-size: 200px 100%;
+  background-repeat: no-repeat;
+  color: #0e6252;
+}
+
+input:focus,
+input:valid {
+  box-shadow: none;
+  outline: none;
+  background-position: 0 0;
+}
+
+input::-webkit-input-placeholder {
+  font-family: "roboto", sans-serif;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+input:focus::-webkit-input-placeholder,
+input:valid::-webkit-input-placeholder {
+  color: #1abc9c;
+  font-size: 11px;
+  -webkit-transform: translateY(-20px);
+  transform: translateY(-20px);
+  visibility: visible !important;
+}
+#btn-add {
+  position: relative !important;
+}
+.category-container {
+  justify-content: center;
+  display: inline-block;
+  position: relative;
+  margin: 5px;
+}
 .container {
   height: 100%;
   align-content: center;
