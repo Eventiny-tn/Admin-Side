@@ -11,6 +11,8 @@ import { Connection } from 'typeorm';
 import { AuthModule } from './auth/auth.module';
 import { CategoryController } from './category/category.controller';
 import { CategoryModule } from './category/category.module';
+import { EventModule } from './event/event.module';
+import { CategoryService } from './category/category.service';
 
 @Module({
   imports: [
@@ -22,9 +24,10 @@ import { CategoryModule } from './category/category.module';
       signOptions: { expiresIn: '24h' },
     }),
     CategoryModule,
+    EventModule,
   ],
   controllers: [AppController, AdminController, CategoryController],
-  providers: [AppService, AdminsService],
+  providers: [AppService, AdminsService, CategoryService],
 })
 export class AppModule {
   constructor(private connection: Connection) {}

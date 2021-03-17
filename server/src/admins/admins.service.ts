@@ -1,5 +1,5 @@
 import { jwtConstants } from './../auth/constants';
-import { AdminFront } from './../entities/admin/admin.entity';
+import { AdminFront } from '../entities/admin/admin.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Admin } from '../entities/admin/admin.entity';
 import { Injectable, NotFoundException, Request } from '@nestjs/common';
@@ -37,7 +37,10 @@ export class AdminsService {
   //   body.password = hash;
   //   console.log(body);
 
-  //   await this.adminRepository.save(body);
+  //   await this.adminRepository.save({
+  //     username: body.username,
+  //     password: hash,
+  //   });
   //   return { success: true };
   // }
 

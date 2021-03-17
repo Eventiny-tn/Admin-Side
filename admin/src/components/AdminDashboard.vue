@@ -487,7 +487,6 @@ a.navbar-brand {
 
 .top-nav > li {
   display: inline-block;
-  float: left !important;
 }
 
 .top-nav > li > a {

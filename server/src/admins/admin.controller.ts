@@ -1,5 +1,5 @@
 import { AdminsService } from './admins.service';
-import { AdminFront } from './../entities/admin/admin.entity';
+import { AdminFront } from '../entities/admin/admin.entity';
 import {
   Body,
   Controller,
