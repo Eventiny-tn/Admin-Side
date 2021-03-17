@@ -1,5 +1,5 @@
 import { JwtPayload } from './jwt-payload.interface';
-import { Admin } from './../entities/admin/admin.entity';
+import { Admin } from '../entities/admin/admin.entity';
 import { jwtConstants } from './constants';
 import { Strategy, ExtractJwt } from 'passport-jwt';
 import { InjectRepository } from '@nestjs/typeorm';

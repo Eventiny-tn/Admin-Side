@@ -8,11 +8,11 @@ export class Admin {
   username: string;
   @Column()
   password: string;
-  @Column()
+  @Column({ default: null })
   imageUrl: string;
-  @Column()
+  @Column({ default: null })
   email: string;
-  @Column()
+  @Column({ default: null })
   fullName: string;
 }
 

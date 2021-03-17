@@ -1,6 +1,6 @@
 import { jwtConstants } from './../auth/constants';
 import { AuthModule } from './../auth/auth.module';
-import { Admin } from './../entities/admin/admin.entity';
+import { Admin } from '../entities/admin/admin.entity';
 import { Module } from '@nestjs/common';
 import { AdminsService } from './admins.service';
 
