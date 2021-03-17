@@ -9,6 +9,8 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Connection } from 'typeorm';
 import { AuthModule } from './auth/auth.module';
+import { CategoryController } from './category/category.controller';
+import { CategoryModule } from './category/category.module';
 
 @Module({
   imports: [
@@ -19,8 +21,9 @@ import { AuthModule } from './auth/auth.module';
       secret: jwtConstants.secret,
       signOptions: { expiresIn: '24h' },
     }),
+    CategoryModule,
   ],
-  controllers: [AppController, AdminController],
+  controllers: [AppController, AdminController, CategoryController],
   providers: [AppService, AdminsService],
 })
 export class AppModule {
