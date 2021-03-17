@@ -23,7 +23,7 @@
         <ul class="nav navbar-right top-nav">
           <li class="dropdown" id="option">
             <span class="option"
-              ><span class="label label-success bg-success">10</span>
+              ><span class="label label-success bg-success">1</span>
               <i class="bell outline icon"> </i>
             </span>
             <div class="dropdown-content">
