@@ -1,23 +1,59 @@
 import { Events } from './event.entity';
 import { Body, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, Connection } from 'typeorm';
 import { Category } from 'src/category/category.entity';
 
 @Injectable()
 export class EventService {
   constructor(
     @InjectRepository(Events)
-    private eventRepository: Repository<Event>,
+    private eventRepository: Repository<Events>,
+    @InjectRepository(Category)
+    private categoryRepository: Repository<Category>,
+    private connection: Connection,
   ) {}
-  async addEvent(body: object): Promise<Error | string> {
-    console.log(body);
-    if (body) {
+  async addEvent({
+    name,
+    time,
+    dateStart,
+    dateEnds,
+    location,
+    price,
+    images,
+    caption,
+    cover,
+    categories,
+  }): Promise<Error | string> {
+    if (name) {
       // await this.eventRepository.
-      await this.eventRepository.save(body);
-      return 'done';
-    } else {
-      return new NotFoundException('NOT FOUND');
+      let event = new Events(
+        name,
+        time,
+        dateStart,
+        dateEnds,
+        location,
+        price,
+        images,
+        caption,
+        cover,
+      );
+      try {
+        event.categories = [];
+        // find the id of the categories by name
+        for (let i = 0; i < categories.length; i++) {
+          var currentObj = await this.categoryRepository.find({
+            name: categories[i],
+          });
+          if (currentObj.length > 0) {
+            event.categories.push(currentObj[0]);
+          }
+        }
+        await this.connection.manager.save(event);
+        return 'done';
+      } catch (err) {
+        return new NotFoundException('NOT FOUND');
+      }
     }
   }
 

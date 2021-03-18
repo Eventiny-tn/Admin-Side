@@ -17,13 +17,15 @@ export class Category {
   @Column({ type: 'text' })
   description: string;
 
-  @ManyToMany(() => Events, { cascade: true })
-  @JoinTable({
-    name: 'event_category',
-    joinColumn: { name: 'event_id', referencedColumnName: 'id' },
-    inverseJoinColumn: { name: 'category_id', referencedColumnName: 'id' },
-  })
+  @ManyToMany((type) => Events, (event) => event.categories)
   event: Events[];
+  // @ManyToMany(() => Events, { cascade: true })
+  // @JoinTable({
+  //   name: 'event_category',
+  //   joinColumn: { name: 'event_id', referencedColumnName: 'id' },
+  //   inverseJoinColumn: { name: 'category_id', referencedColumnName: 'id' },
+  // })
+  // event: Events[];
 }
 export interface CategoryType {
   name: string;

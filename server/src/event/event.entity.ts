@@ -28,9 +28,37 @@ export class Events {
   @Column()
   cover: string;
   @Column('simple-array')
-  category_id: number[];
-  @Column('simple-array')
-  images: string[];
+  images: string;
   @Column({ default: false })
   pending: boolean;
+
+  @ManyToMany(() => Category, { cascade: true })
+  @JoinTable({
+    name: 'event_category',
+    joinColumn: { name: 'category_id', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'event_id', referencedColumnName: 'id' },
+  })
+  categories: Category[];
+
+  constructor(
+    name: string,
+    time: string,
+    dateStart: string,
+    dateEnds: string,
+    location: string,
+    price: number,
+    caption: string,
+    cover: string,
+    images: string,
+  ) {
+    this.name = name;
+    this.time = time;
+    this.dateStart = dateStart;
+    this.dateEnds = dateEnds;
+    this.location = location;
+    this.price = price;
+    this.caption = caption;
+    this.cover = cover;
+    this.images = images;
+  }
 }

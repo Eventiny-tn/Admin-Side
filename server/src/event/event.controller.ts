@@ -14,7 +14,7 @@ export class EventController {
   constructor(private readonly eventService: EventService) {}
 
   @Post()
-  addEvent(@Body() body: object): Promise<Error | string> {
+  addEvent(@Body() body: any): Promise<Error | string> {
     return this.eventService.addEvent(body);
   }
   @Get()
