@@ -45,6 +45,9 @@
                   required
                   :v-model="image"
                 />
+                <div @click="closeAddCategory()">
+                  <i class="ui ban icon close"></i>
+                </div>
               </div>
               <button class="ui button" @click="onSubmitCategory()">
                 Submit
@@ -72,6 +75,7 @@
                     Delete
                   </button>
                 </div>
+
                 <div class="extra">
                   {{ element.description }}
                 </div>
@@ -116,6 +120,9 @@ export default {
     displayAddCategory() {
       this.$data.viewForm = true;
     },
+    closeAddCategory() {
+      this.$data.viewForm = false;
+    },
     onSubmitCategory() {
       if (
         this.$data.name !== "" &&
@@ -157,6 +164,12 @@ export default {
 };
 </script>
 <style scoped>
+.close {
+  cursor: pointer;
+}
+.close:hover {
+  color: red !important;
+}
 input {
   margin: 40px 25px;
   width: 200px;
