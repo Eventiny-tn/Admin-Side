@@ -1,6 +1,10 @@
 <template>
   <div class="about">
-    <AdminDashboard :adminLogout="adminLogout" />
+    <AdminDashboard
+      :adminLogout="adminLogout"
+      :users="users"
+      :getUsersNotBanned="getUsersNotBanned"
+    />
   </div>
 </template>
 <script>
@@ -13,11 +17,25 @@ export default {
   components: {
     AdminDashboard,
   },
+  data() {
+    return {
+      users: [],
+    };
+  },
   methods: {
     adminLogout() {
       localStorage.removeItem("isLogged");
       this.$router.push("/");
     },
+    getUsersNotBanned() {
+      axios.get("http://localhost:3000/user").then(({ data }) => {
+        this.$data.users = data;
+        console.log("user :", data);
+      });
+    },
+  },
+  mounted() {
+    this.getUsersNotBanned();
   },
   beforeMount() {
     const token = localStorage.getItem("isLogged");

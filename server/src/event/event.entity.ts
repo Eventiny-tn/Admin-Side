@@ -27,8 +27,8 @@ export class Events {
   caption: string;
   @Column()
   cover: string;
-  @Column()
-  category_id: number;
+  @Column('simple-array')
+  category_id: number[];
   @Column('simple-array')
   images: string[];
   @Column({ default: false })

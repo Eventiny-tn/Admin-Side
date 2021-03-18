@@ -65,7 +65,7 @@
 
             <div
               class="job-box d-md-flex align-items-center justify-content-between mb-30"
-              v-for="(event, i) in events"
+              v-for="(user, i) in users"
               :key="i"
             >
               <div class="job-left my-4 d-md-flex align-items-center flex-wrap">
@@ -75,21 +75,26 @@
                   JS
                 </div>
                 <div class="job-content">
-                  <h5 class="text-center text-md-left">Name of the user</h5>
+                  <h5 class="text-center text-md-left">{{ user.username }}</h5>
                   <ul class="d-md-flex flex-wrap text-capitalize ff-open-sans">
                     <li class="mr-md-4">
-                      <i class="zmdi zmdi-pin mr-2"></i> Los Angeles
+                      <i class="zmdi zmdi-pin mr-2"></i> {{ user.city }}
                     </li>
                     <li class="mr-md-4">
-                      <span class="ui basic button">Report 0</span>
+                      <span class="ui basic button"
+                        >Report : {{ user.reportCounter }}</span
+                      >
                     </li>
                     <li class="mr-md-4">
-                      <i class="zmdi zmdi-time mr-2"></i> Full Time
+                      <i class="zmdi zmdi-time mr-2"></i>{{ user.birthday }}
                     </li>
                   </ul>
                 </div>
               </div>
-              <div class="job-right my-4 flex-shrink-0">
+              <div
+                class="job-right my-4 flex-shrink-0"
+                @click="banUser(user.id)"
+              >
                 <a
                   class="ui negative button btn d-block w-100 d-sm-inline-block btn-light"
                   >Ban</a
@@ -130,12 +135,28 @@
   </div>
 </template>
 <script>
+import axios from "axios";
 // $(document).ready(function() {});
 export default {
   data() {
     return {
-      events: [1, 2, 3, 4, 5],
+      // events: [1, 2, 3, 4, 5],
     };
+  },
+  props: {
+    users: { type: Object },
+    getUsersNotBanned: {
+      type: Function,
+    },
+  },
+  methods: {
+    banUser(id) {
+      console.log(id);
+      axios.patch("http://localhost:3000/user/" + id).then(({ data }) => {
+        console.log(data);
+        this.getUsersNotBanned();
+      });
+    },
   },
 };
 </script>

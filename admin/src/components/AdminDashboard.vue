@@ -111,7 +111,11 @@
                 <PendingRequests :logout="logout" />
               </div>
               <div v-if="view === 1">
-                <Users :logout="logout" />
+                <Users
+                  :logout="logout"
+                  :users="users"
+                  :getUsersNotBanned="getUsersNotBanned"
+                />
               </div>
               <div v-if="view === 2">
                 <CategoryList
@@ -149,6 +153,12 @@ export default {
   },
   beforeMount() {
     this.getCategoryList();
+  },
+  props: {
+    users: {
+      type: Object,
+    },
+    getUsersNotBanned: { type: Function },
   },
   data() {
     return {

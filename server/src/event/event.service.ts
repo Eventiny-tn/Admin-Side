@@ -1,7 +1,8 @@
 import { Events } from './event.entity';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Body, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { Category } from 'src/category/category.entity';
 
 @Injectable()
 export class EventService {
@@ -12,6 +13,7 @@ export class EventService {
   async addEvent(body: object): Promise<Error | string> {
     console.log(body);
     if (body) {
+      // await this.eventRepository.
       await this.eventRepository.save(body);
       return 'done';
     } else {
@@ -26,6 +28,10 @@ export class EventService {
     } else {
       return new NotFoundException('NOT FOUND');
     }
+  }
+  async getEventByCategory(@Body() body): Promise<Error | any> {
+    const events = await this.eventRepository.findByIds(body.categoryID);
+    console.log(events);
   }
   async updateByid(id, body): Promise<Error | string> {
     console.log(body);

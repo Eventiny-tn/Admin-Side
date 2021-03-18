@@ -16,10 +16,8 @@ export class Category {
   image: string;
   @Column({ type: 'text' })
   description: string;
-  @Column({ default: false })
-  event_id: number;
 
-  @ManyToMany(() => Events)
+  @ManyToMany(() => Events, { cascade: true })
   @JoinTable({
     name: 'event_category',
     joinColumn: { name: 'event_id', referencedColumnName: 'id' },
