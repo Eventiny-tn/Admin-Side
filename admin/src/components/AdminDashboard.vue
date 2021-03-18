@@ -91,6 +91,9 @@
             <li @click.prevent="userListView()">
               <a><i class="ui briefcase icon"></i>Users List</a>
             </li>
+            <li @click.prevent="categoryListView()">
+              <a><i class="fa fa-fw fa fa-question-circle"></i>Category</a>
+            </li>
             <li @click.prevent="settingsView()">
               <a><i class="fa fa-fw fa fa-question-circle"></i>Settings</a>
             </li>
@@ -108,9 +111,19 @@
                 <PendingRequests :logout="logout" />
               </div>
               <div v-if="view === 1">
-                <UsersList :logout="logout" />
+                <Users
+                  :logout="logout"
+                  :users="users"
+                  :getUsersNotBanned="getUsersNotBanned"
+                />
               </div>
               <div v-if="view === 2">
+                <CategoryList
+                  v-bind:data="data"
+                  v-bind:getCategoryList="getCategoryList"
+                />
+              </div>
+              <div v-if="view === 3">
                 <Setting :logout="logout" />
               </div>
             </div>
@@ -125,22 +138,41 @@
   </div>
 </template>
 <script>
-import UsersList from "./UsersList.vue";
+import Users from "./Users.vue";
 import PendingRequests from "./PendingRequests.vue";
 import Setting from "./Setting.vue";
+import CategoryList from "./CategoryList.vue";
+import axios from "axios";
 export default {
   name: "AdminDashboard",
   components: {
     PendingRequests,
-    UsersList,
+    Users,
     Setting,
+    CategoryList,
+  },
+  beforeMount() {
+    this.getCategoryList();
+  },
+  props: {
+    users: {
+      type: Object,
+    },
+    getUsersNotBanned: { type: Function },
   },
   data() {
     return {
       view: 0,
+      data: [],
     };
   },
   methods: {
+    getCategoryList() {
+      axios.get("http://localhost:3000/category").then(({ data }) => {
+        this.$data.data = data;
+        console.log(data);
+      });
+    },
     logout() {
       localStorage.removeItem("isLogged");
       this.$router.push("/");
@@ -151,8 +183,11 @@ export default {
     userListView() {
       this.$data.view = 1;
     },
-    settingsView() {
+    categoryListView() {
       this.$data.view = 2;
+    },
+    settingsView() {
+      this.$data.view = 3;
     },
   },
 };

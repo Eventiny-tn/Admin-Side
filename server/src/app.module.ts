@@ -13,6 +13,7 @@ import { CategoryController } from './category/category.controller';
 import { CategoryModule } from './category/category.module';
 import { EventModule } from './event/event.module';
 import { CategoryService } from './category/category.service';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { CategoryService } from './category/category.service';
     }),
     CategoryModule,
     EventModule,
+    UserModule,
   ],
   controllers: [AppController, AdminController, CategoryController],
   providers: [AppService, AdminsService, CategoryService],

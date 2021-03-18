@@ -1,3 +1,4 @@
+import { Events } from './../event/event.entity';
 import {
   Entity,
   Column,
@@ -5,7 +6,6 @@ import {
   ManyToMany,
   JoinTable,
 } from 'typeorm';
-import { Event } from '../event/event.entity';
 @Entity('category')
 export class Category {
   @PrimaryGeneratedColumn()
@@ -14,16 +14,18 @@ export class Category {
   name: string;
   @Column()
   image: string;
-  @Column()
+  @Column({ type: 'text' })
   description: string;
 
-  @ManyToMany((type) => Event, { cascade: true })
-  @JoinTable({
-    name: 'Event_Category',
-    joinColumn: { name: 'event_id', referencedColumnName: 'id' },
-    inverseJoinColumn: { name: 'category_id', referencedColumnName: 'id' },
-  })
-  Event: Event[];
+  @ManyToMany((type) => Events, (event) => event.categories)
+  event: Events[];
+  // @ManyToMany(() => Events, { cascade: true })
+  // @JoinTable({
+  //   name: 'event_category',
+  //   joinColumn: { name: 'event_id', referencedColumnName: 'id' },
+  //   inverseJoinColumn: { name: 'category_id', referencedColumnName: 'id' },
+  // })
+  // event: Events[];
 }
 export interface CategoryType {
   name: string;

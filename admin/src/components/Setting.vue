@@ -19,14 +19,41 @@
       <div class="col-md-9  admin-content" id="profile">
         <div class="ui unstackable items">
           <div class="item">
-            <div class="image">
-              <img
-                :src="
-                  imageUrl
-                    ? imageUrl
-                    : 'https://i1.sndcdn.com/artworks-000205545703-y08l8k-t500x500.jpg'
-                "
-              />
+            <div class="column">
+              <div class="ui fluid small image">
+                <div class="ui link cards">
+                  <div class="card">
+                    <div class="image">
+                      <img
+                        :src="
+                          imageUrl
+                            ? imageUrl
+                            : 'https://i1.sndcdn.com/artworks-000205545703-y08l8k-t500x500.jpg'
+                        "
+                      />
+                    </div>
+                    <div class="extra content">
+                      <div class="ui transparent input">
+                        <input
+                          class="ui button"
+                          type="file"
+                          id="file"
+                          ref="file"
+                          v-on:change="handleFileUpload()"
+                        />
+                      </div>
+                      <span class="right floated">
+                        <div
+                          class="ui button"
+                          @click="uploadPictureToDataBase()"
+                        >
+                          Upload Picture
+                        </div>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
             <div class="content">
               <a class="header">{{ data.username }}</a>
@@ -350,6 +377,21 @@ export default {
 };
 </script>
 <style scoped>
+.inputUpload {
+  width: 2px;
+  font-size: 2px;
+}
+.file {
+  margin-left: 0;
+  width: 20px;
+}
+.label {
+  cursor: pointer;
+  font-size: 1.2em;
+}
+.icon {
+  cursor: pointer;
+}
 .form-btn {
   margin-left: 10px;
 }
