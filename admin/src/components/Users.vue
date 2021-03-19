@@ -10,28 +10,20 @@
                   <input
                     type="text"
                     class="form-control"
-                    placeholder="Enter Your Keywords"
+                    placeholder="Search for a user"
                     id="keywords"
+                    @change="searchUsers($event.target.value)"
                   />
                 </div>
               </div>
-              <div class="col-md-6 col-lg-3 my-3">
-                <div class="select-container">
-                  <select class="custom-select">
-                    <option selected="">Location</option>
-                    <option value="1">Jaipur</option>
-                    <option value="2">Pune</option>
-                    <option value="3">Bangalore</option>
-                  </select>
-                </div>
-              </div>
+              <div class="col-md-6 col-lg-3 my-3"></div>
               <div class="col-md-6 col-lg-3 my-3">
                 <div class="select-container">
                   <select
                     class="custom-select"
                     @click="filterByBanned($event.target.value)"
                   >
-                    <option selected="" class="options">Select Job Type</option>
+                    <option selected="" class="options">Select</option>
                     <option value="1" class="options">Banned User</option>
                     <option value="2" class="options">Unbanned</option>
                   </select>
@@ -50,7 +42,9 @@
           </form>
 
           <div class="filter-result">
-            <p class="mb-30 ff-montserrat">Total Job Openings : 89</p>
+            <p class="mb-30 ff-montserrat">
+              Number Of users : {{ users.length }}
+            </p>
 
             <div
               class="job-box d-md-flex align-items-center justify-content-between mb-30"
@@ -74,8 +68,8 @@
                         >Report : {{ user.reportCounter }}</span
                       >
                     </li>
-                    <li class="mr-md-4">
-                      <i class="zmdi zmdi-time mr-2"></i>{{ user.birthday }}
+                    <li class="mr-md-4" v-if="user.birthday">
+                      <i class="ui birthday cake icon"></i>{{ user.birthday }}
                     </li>
                   </ul>
                 </div>
@@ -143,12 +137,15 @@ import swal from "sweetalert";
 export default {
   data() {
     return {
-      // events: [1, 2, 3, 4, 5],
+      // events: this.users,
       filterBanner: "",
+      query: "",
     };
   },
   props: {
-    users: { type: Object },
+    users: {
+      type: Object,
+    },
     getUsersNotBanned: {
       type: Function,
     },
@@ -156,6 +153,7 @@ export default {
       type: Function,
     },
   },
+
   methods: {
     banUser(id) {
       swal({
@@ -178,6 +176,20 @@ export default {
         }
       });
     },
+    // searchUsers() =>{
+    //   console.log(this.$data.query);
+    //   // if (query !== "") {
+    //   //   const arr = [];
+    //   //   this.users.map((element) => {
+    //   //     if (element.name.includes(query) !== -1) {
+    //   //       arr.push(element);
+    //   //     }
+    //   //   });
+    //   //   this.$data.events = arr;
+    //   // } else {
+    //   //   this.getUsersNotBanned();
+    //   // }
+    // },
   },
 };
 </script>
