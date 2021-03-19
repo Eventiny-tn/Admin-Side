@@ -118,6 +118,7 @@
                   :users="users"
                   :getUsersNotBanned="getUsersNotBanned"
                   :adminInfo="adminInfo"
+                  :filterByBanned="filterByBanned"
                 />
               </div>
               <div v-if="view === 2">
@@ -174,6 +175,9 @@ export default {
       type: Function,
     },
     getAdminInfo: {
+      type: Function,
+    },
+    filterByBanned: {
       type: Function,
     },
   },

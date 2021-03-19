@@ -12,4 +12,8 @@ export class UserController {
   banUser(@Param() id: number): Promise<Error | string> {
     return this.userService.banUser(id);
   }
+  @Get('filter/:id')
+  filterUserBanned(@Param() id: number): Promise<Error | object> {
+    return this.userService.filterUserBanned(id);
+  }
 }

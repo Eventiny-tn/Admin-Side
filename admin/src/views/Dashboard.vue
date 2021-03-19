@@ -6,6 +6,7 @@
       :getUsersNotBanned="getUsersNotBanned"
       :adminInfo="adminInfo"
       :getAdminInfo="getAdminInfo"
+      :filterByBanned="filterByBanned"
     />
   </div>
 </template>
@@ -44,6 +45,12 @@ export default {
           this.$data.adminInfo = data;
         })
         .catch((err) => console.log(err));
+    },
+    filterByBanned(id) {
+      axios.get("http://localhost:3000/user/filter/" + id).then(({ data }) => {
+        console.log("haythem", data);
+        this.$data.users = data;
+      });
     },
   },
   mounted() {

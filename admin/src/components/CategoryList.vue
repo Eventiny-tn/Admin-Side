@@ -2,7 +2,7 @@
   <div class="col-md-7 col-sm-7 col-xs-12 gutter">
     <div class="sales report">
       <div class="category-container">
-        <h2>Users List</h2>
+        <h2>List Of Categories</h2>
         <div
           class="ui right dividing rail"
           v-if="viewForm === false"

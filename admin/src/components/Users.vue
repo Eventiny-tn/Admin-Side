@@ -27,11 +27,13 @@
               </div>
               <div class="col-md-6 col-lg-3 my-3">
                 <div class="select-container">
-                  <select class="custom-select">
-                    <option selected="">Select Job Type</option>
-                    <option value="1">Ui designer</option>
-                    <option value="2">JS developer</option>
-                    <option value="3">Web developer</option>
+                  <select
+                    class="custom-select"
+                    @click="filterByBanned($event.target.value)"
+                  >
+                    <option selected="" class="options">Select Job Type</option>
+                    <option value="1" class="options">Banned User</option>
+                    <option value="2" class="options">Unbanned</option>
                   </select>
                 </div>
               </div>
@@ -78,9 +80,22 @@
                   </ul>
                 </div>
               </div>
+              <div>
+                <div
+                  class="job-right my-4 flex-shrink-0"
+                  @click="banUser(user.id)"
+                  v-if="user.isBanned"
+                >
+                  <a
+                    class="ui positive basic button btn d-block w-100 d-sm-inline-block btn-light"
+                    >Unbanned</a
+                  >
+                </div>
+              </div>
               <div
                 class="job-right my-4 flex-shrink-0"
                 @click="banUser(user.id)"
+                v-if="!user.isBanned"
               >
                 <a
                   class="ui negative button btn d-block w-100 d-sm-inline-block btn-light"
@@ -129,11 +144,15 @@ export default {
   data() {
     return {
       // events: [1, 2, 3, 4, 5],
+      filterBanner: "",
     };
   },
   props: {
     users: { type: Object },
     getUsersNotBanned: {
+      type: Function,
+    },
+    filterByBanned: {
       type: Function,
     },
   },
@@ -163,6 +182,12 @@ export default {
 };
 </script>
 <style scoped>
+.options {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-size: 14px;
+  color: black;
+}
+
 body {
   background: #f5f5f5;
   margin-top: 20px;
