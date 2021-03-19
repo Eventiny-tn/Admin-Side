@@ -12,6 +12,7 @@
     "core-js": "^3.6.5",
     "jqeury": "0.0.1-security",
     "jquery": "^3.6.0",
+    "moment": "^2.29.1",
     "sweetalert": "^2.1.2",
     "vue": "^3.0.0",
     "vue-axios": "^3.2.4",
