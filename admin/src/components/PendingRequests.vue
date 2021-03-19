@@ -7,18 +7,15 @@
         <div class="card-body">
           <div class="row">
             <div class="col-md-2">
-              <img
-                src="https://image.ibb.co/jw55Ex/def_face.jpg"
-                class="img img-rounded img-fluid"
-              />
-              <p class="text-secondary text-center">15 Minutes Ago</p>
+              <img :src="event.images[0]" class="img img-rounded img-fluid" />
+              <p class="text-secondary text-center">
+                {{ event.time }}
+              </p>
             </div>
             <div class="col-md-10">
               <p>
-                <a
-                  class="float-left"
-                  href="https://maniruzzaman-akash.blogspot.com/p/contact.html"
-                  ><strong>Event</strong></a
+                <a class="float-left"
+                  ><strong>{{ event.name }}</strong></a
                 >
                 <span class="float-right"
                   ><i class="text-warning fa fa-star"></i
@@ -35,16 +32,21 @@
               </p>
               <div class="clearfix"></div>
               <p>
-                Lorem Ipsum is simply dummy text of the pr make but also the
-                leap into electronic typesetting, remaining essentially
-                unchanged. It was popularised in the 1960s with the release of
-                Letraset sheets containing Lorem Ipsum passages, and more
-                recently with desktop publishing software like Aldus PageMaker
-                including versions of Lorem Ipsum.
+                {{ event.cover }}
               </p>
               <p>
-                <button class="ui positive basic button">Approve</button>
-                <button class="ui negative basic button">Decline</button>
+                <button
+                  class="ui positive basic button"
+                  @click="approveRequest(event.id)"
+                >
+                  Approve
+                </button>
+                <button
+                  class="ui negative basic button"
+                  @click="declineEvent(event.id)"
+                >
+                  Decline
+                </button>
               </p>
             </div>
           </div>
@@ -57,6 +59,8 @@
 </template>
 
 <script>
+import axios from "axios";
+// import moment from "moment";
 export default {
   name: "Dash",
   props: {
@@ -66,8 +70,36 @@ export default {
   },
   data() {
     return {
-      events: [1, 2, 3, 4, 5, 6, 8, 9],
+      events: [],
     };
+  },
+  methods: {
+    getAllPendingRequests() {
+      axios.get("http://localhost:3000/event").then(({ data }) => {
+        this.$data.events = data;
+        console.log("==>>", data);
+      });
+    },
+    declineEvent(id) {
+      console.log(id);
+      if (id) {
+        axios.delete("http://localhost:3000/event/" + id).then(({ data }) => {
+          console.log(data);
+          this.getAllPendingRequests();
+        });
+      }
+    },
+    approveRequest(id) {
+      if (id) {
+        axios.patch("http://localhost:3000/event/" + id).then(({ data }) => {
+          console.log(data);
+          this.getAllPendingRequests();
+        });
+      }
+    },
+  },
+  mounted() {
+    this.getAllPendingRequests();
   },
 };
 </script>

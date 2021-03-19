@@ -12,7 +12,6 @@ export class CategoryService {
   async addCategory(body: CategoryType): Promise<Error | string> {
     console.log(body);
     if (body) {
-      
       await this.categoryRepository.save(body);
       return 'done';
     } else {
