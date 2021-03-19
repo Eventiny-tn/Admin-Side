@@ -27,11 +27,13 @@
               </div>
               <div class="col-md-6 col-lg-3 my-3">
                 <div class="select-container">
-                  <select class="custom-select">
-                    <option selected="">Select Job Type</option>
-                    <option value="1">Ui designer</option>
-                    <option value="2">JS developer</option>
-                    <option value="3">Web developer</option>
+                  <select
+                    class="custom-select"
+                    @click="filterByBanned($event.target.value)"
+                  >
+                    <option selected="" class="options">Select Job Type</option>
+                    <option value="1" class="options">Banned User</option>
+                    <option value="2" class="options">Unbanned</option>
                   </select>
                 </div>
               </div>
@@ -78,9 +80,22 @@
                   </ul>
                 </div>
               </div>
+              <div>
+                <div
+                  class="job-right my-4 flex-shrink-0"
+                  @click="banUser(user.id)"
+                  v-if="user.isBanned"
+                >
+                  <a
+                    class="ui positive basic button btn d-block w-100 d-sm-inline-block btn-light"
+                    >Unbanned</a
+                  >
+                </div>
+              </div>
               <div
                 class="job-right my-4 flex-shrink-0"
                 @click="banUser(user.id)"
+                v-if="!user.isBanned"
               >
                 <a
                   class="ui negative button btn d-block w-100 d-sm-inline-block btn-light"
@@ -123,11 +138,13 @@
 </template>
 <script>
 import axios from "axios";
-// $(document).ready(function() {});
+import swal from "sweetalert";
+
 export default {
   data() {
     return {
       // events: [1, 2, 3, 4, 5],
+      filterBanner: "",
     };
   },
   props: {
@@ -135,19 +152,42 @@ export default {
     getUsersNotBanned: {
       type: Function,
     },
+    filterByBanned: {
+      type: Function,
+    },
   },
   methods: {
     banUser(id) {
-      console.log(id);
-      axios.patch("http://localhost:3000/user/" + id).then(({ data }) => {
-        console.log(data);
-        this.getUsersNotBanned();
+      swal({
+        title: "Are you sure?",
+        text: "Once Ban, The user will be banned pairmanently!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      }).then((willDelete) => {
+        if (willDelete) {
+          axios.patch("http://localhost:3000/user/" + id).then(({ data }) => {
+            console.log(data);
+            this.getUsersNotBanned();
+          });
+          swal("Thank you! The user has been banned", {
+            icon: "success",
+          });
+        } else {
+          swal("The user is safe!");
+        }
       });
     },
   },
 };
 </script>
 <style scoped>
+.options {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-size: 14px;
+  color: black;
+}
+
 body {
   background: #f5f5f5;
   margin-top: 20px;

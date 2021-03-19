@@ -2,7 +2,7 @@
   <div class="col-md-7 col-sm-7 col-xs-12 gutter">
     <div class="sales report">
       <div class="category-container">
-        <h2>Users List</h2>
+        <h2>List Of Categories</h2>
         <div
           class="ui right dividing rail"
           v-if="viewForm === false"
@@ -135,6 +135,8 @@
 
 <script>
 import axios from "axios";
+import swal from "sweetalert";
+
 export default {
   props: {
     data: {
@@ -157,10 +159,27 @@ export default {
   },
   methods: {
     deleteById(id) {
-      console.log("clicked", id);
-      axios.delete("http://localhost:3000/category/" + id).then(({ data }) => {
-        console.log(data);
-        this.getCategoryList();
+      swal({
+        title: "Are you sure?",
+        text:
+          "Once deleted, you will not be able to recover this category file!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      }).then((willDelete) => {
+        if (willDelete) {
+          axios
+            .delete("http://localhost:3000/category/" + id)
+            .then(({ data }) => {
+              console.log(data);
+              this.getCategoryList();
+            });
+          swal("The category has been deleted!", {
+            icon: "success",
+          });
+        } else {
+          swal("Your category is safe!");
+        }
       });
     },
     displayAddCategory() {
@@ -217,10 +236,6 @@ export default {
     },
     handleFileUpload() {
       this.file = this.$refs.file.files[0];
-
-      console.log(this.file);
-      // Change the src attribute of the image to path
-
       const image = new FormData();
       image.append("file", this.file);
       image.append("upload_preset", "lwsk5njh");

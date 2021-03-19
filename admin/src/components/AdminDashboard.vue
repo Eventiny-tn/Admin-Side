@@ -23,21 +23,25 @@
         <ul class="nav navbar-right top-nav">
           <li class="dropdown" id="option">
             <span class="option"
-              ><span class="label label-success bg-success">1</span>
+              ><span class="label label-success bg-success">{{
+                notification.length
+              }}</span>
               <i class="bell outline icon"> </i>
             </span>
-            <div class="dropdown-content">
+            <div
+              class="dropdown-content"
+              v-for="(element, i) in notification"
+              :key="i"
+            >
               <div class="ui very relaxed list">
                 <div class="item">
-                  <img
-                    class="ui avatar image"
-                    src="https://www.hip-hop.tn/persons/16.jpg"
-                  />
+                  <img class="ui avatar image" :src="element.images" />
                   <div class="content">
-                    <a class="header">Daniel Louise</a>
+                    <a class="header">{{ element.name }}</a>
                     <div class="description">
                       Last seen watching
-                      <a><b>Arrested Development</b></a> just now.
+                      <a><b>Arrested Development</b></a
+                      >{{ element.time }}.
                     </div>
                   </div>
                 </div>
@@ -72,16 +76,14 @@
               <div class="user-panel">
                 <div class="pull-left image">
                   <img
-                    src="https://i1.sndcdn.com/artworks-000205545703-y08l8k-t500x500.jpg"
+                    :src="adminInfo.imageUrl"
                     class="rounded-circle"
                     alt="User Image"
                   />
                 </div>
                 <div class="pull-left info">
                   <p>Admin</p>
-                  <a href="#"
-                    ><i class="fa fa-circle text-success"></i> Online</a
-                  >
+                  <a><i class="fa fa-circle text-success"></i> Online</a>
                 </div>
               </div>
             </li>
@@ -115,16 +117,23 @@
                   :logout="logout"
                   :users="users"
                   :getUsersNotBanned="getUsersNotBanned"
+                  :adminInfo="adminInfo"
+                  :filterByBanned="filterByBanned"
                 />
               </div>
               <div v-if="view === 2">
                 <CategoryList
                   v-bind:data="data"
                   v-bind:getCategoryList="getCategoryList"
+                  :adminInfo="adminInfo"
                 />
               </div>
               <div v-if="view === 3">
-                <Setting :logout="logout" />
+                <Setting
+                  :logout="logout"
+                  :adminInfo="adminInfo"
+                  :getAdminInfo="getAdminInfo"
+                />
               </div>
             </div>
           </div>
@@ -153,25 +162,44 @@ export default {
   },
   beforeMount() {
     this.getCategoryList();
+    this.getAllPendingRequests();
   },
   props: {
     users: {
       type: Object,
     },
-    getUsersNotBanned: { type: Function },
+    adminInfo: {
+      type: Function,
+    },
+    getUsersNotBanned: {
+      type: Function,
+    },
+    getAdminInfo: {
+      type: Function,
+    },
+    filterByBanned: {
+      type: Function,
+    },
   },
   data() {
     return {
       view: 0,
       data: [],
+      notification: [],
     };
   },
   methods: {
     getCategoryList() {
       axios.get("http://localhost:3000/category").then(({ data }) => {
         this.$data.data = data;
-        console.log(data);
       });
+    },
+    getAllPendingRequests() {
+      setInterval(() => {
+        axios.get("http://localhost:3000/event").then(({ data }) => {
+          this.$data.notification = data;
+        });
+      }, 3000);
     },
     logout() {
       localStorage.removeItem("isLogged");
@@ -190,6 +218,16 @@ export default {
       this.$data.view = 3;
     },
   },
+  // mounted() {
+  //   axios
+  //     .get("http://localhost:3000/admin/img")
+  //     .then(({ data }) => {
+  //       this.$data.data = data;
+  //       this.$data.adminImg = data.imageUrl;
+  //       console.log(data);
+  //     })
+  //     .catch((err) => console.log(err));
+  // },
 };
 </script>
 <style scoped>
