@@ -35,7 +35,12 @@
                 {{ event.cover }}
               </p>
               <p>
-                <button class="ui positive basic button">Approve</button>
+                <button
+                  class="ui positive basic button"
+                  @click="approveRequest(event.id)"
+                >
+                  Approve
+                </button>
                 <button
                   class="ui negative basic button"
                   @click="declineEvent(event.id)"
@@ -79,6 +84,14 @@ export default {
       console.log(id);
       if (id) {
         axios.delete("http://localhost:3000/event/" + id).then(({ data }) => {
+          console.log(data);
+          this.getAllPendingRequests();
+        });
+      }
+    },
+    approveRequest(id) {
+      if (id) {
+        axios.patch("http://localhost:3000/event/" + id).then(({ data }) => {
           console.log(data);
           this.getAllPendingRequests();
         });

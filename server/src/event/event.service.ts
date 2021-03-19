@@ -59,7 +59,7 @@ export class EventService {
 
   async getAllEvent(req): Promise<Error | object> {
     if (req) {
-      const data = await this.eventRepository.find();
+      const data = await this.eventRepository.find({ pending: false });
       return data;
     } else {
       return new NotFoundException('NOT FOUND');
@@ -82,6 +82,16 @@ export class EventService {
   async deleteOneById(id: number): Promise<Error | string> {
     if (id) {
       await this.eventRepository.delete(id);
+      return 'done';
+    } else {
+      return new NotFoundException('NOT FOUND');
+    }
+  }
+  async approveEvent(n: object): Promise<Error | string> {
+    if (n) {
+      console.log(n);
+
+      await this.eventRepository.update(n, { pending: true });
       return 'done';
     } else {
       return new NotFoundException('NOT FOUND');
