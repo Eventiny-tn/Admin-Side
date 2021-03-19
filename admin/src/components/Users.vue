@@ -123,7 +123,8 @@
 </template>
 <script>
 import axios from "axios";
-// $(document).ready(function() {});
+import swal from "sweetalert";
+
 export default {
   data() {
     return {
@@ -138,10 +139,24 @@ export default {
   },
   methods: {
     banUser(id) {
-      console.log(id);
-      axios.patch("http://localhost:3000/user/" + id).then(({ data }) => {
-        console.log(data);
-        this.getUsersNotBanned();
+      swal({
+        title: "Are you sure?",
+        text: "Once Ban, The user will be banned pairmanently!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      }).then((willDelete) => {
+        if (willDelete) {
+          axios.patch("http://localhost:3000/user/" + id).then(({ data }) => {
+            console.log(data);
+            this.getUsersNotBanned();
+          });
+          swal("Thank you! The user has been banned", {
+            icon: "success",
+          });
+        } else {
+          swal("The user is safe!");
+        }
       });
     },
   },

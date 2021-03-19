@@ -24,89 +24,71 @@
                 <div class="ui link cards">
                   <div class="card">
                     <div class="image">
-                      <img
-                        :src="
-                          imageUrl
-                            ? imageUrl
-                            : 'https://i1.sndcdn.com/artworks-000205545703-y08l8k-t500x500.jpg'
-                        "
-                      />
+                      <img :src="adminInfo.imageUrl" />
                     </div>
-                    <div class="extra content">
-                      <div class="ui transparent input">
-                        <input
-                          class="ui button"
-                          type="file"
-                          id="file"
-                          ref="file"
-                          v-on:change="handleFileUpload()"
-                        />
-                      </div>
-                      <span class="right floated">
-                        <div
-                          class="ui button"
-                          @click="uploadPictureToDataBase()"
-                        >
-                          Upload Picture
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="content">
+                  <a class="header">{{ adminInfo.username }}</a>
+                  <div class="meta">
+                    <div class="ui list">
+                      <div class="item">
+                        <i class="mail icon"></i>
+                        <div class="content">
+                          <a href="">{{ adminInfo.email }}</a>
                         </div>
-                      </span>
+                      </div>
+                    </div>
+                    <span>Bio</span>
+                  </div>
+                  <div class="description">
+                    <p></p>
+                    <div class="ui list">
+                      <div class="item">
+                        <i class="map marker icon"></i>
+                        <div class="content">
+                          <a class="header">{{ adminInfo.fullName }}</a>
+                          <div class="description"></div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div class="content">
-              <a class="header">{{ data.username }}</a>
-              <div class="meta">
-                <div class="ui list">
-                  <div class="item">
-                    <i class="mail icon"></i>
-                    <div class="content">
-                      <a href="">{{ data.email }}</a>
-                    </div>
-                  </div>
-                </div>
-                <span>Bio</span>
-              </div>
-              <div class="description">
-                <p></p>
-                <div class="ui list">
-                  <div class="item">
-                    <i class="map marker icon"></i>
-                    <div class="content">
-                      <a class="header">{{ data.fullName }}</a>
-                      <div class="description"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="extra">
-                Additional Details
               </div>
             </div>
           </div>
         </div>
-
         <div class="panel panel-info" style="margin: 1em;">
           <div class="panel-heading">
             <h3 class="panel-title">Update your Picture</h3>
             <div class="ui placeholder segment">
               <div class="ui icon header">
                 <i class="cloud upload icon"></i>
+                <div class="ui button" @click="uploadPictureToDataBase()">
+                  Upload Picture
+                </div>
               </div>
-              <div class="inline">
+              <div class="image-upload-wrap">
                 <input
-                  class="ui button"
+                  class="file-upload-input"
+                  placeholder="image"
                   type="file"
                   id="file"
                   ref="file"
                   v-on:change="handleFileUpload()"
+                  required
+                  :v-model="image"
                 />
-                <!--  -->
-
-                <div class="ui button" @click="uploadPictureToDataBase()">
-                  Upload Picture
+                <div class="drag-text">
+                  <h3>Drag and drop a Picture</h3>
                 </div>
+              </div>
+              <div class="file-upload-content">
+                <img class="file-upload-image" src="#" alt="your image" />
+                <div class="image-title-wrap"></div>
+                <!--  -->
               </div>
             </div>
           </div>
@@ -261,6 +243,12 @@ export default {
     logout: {
       type: Function,
     },
+    adminInfo: {
+      type: Function,
+    },
+    getAdminInfo: {
+      type: Function,
+    },
   },
   data() {
     return {
@@ -302,24 +290,28 @@ export default {
 
       console.log(this.file);
       // Change the src attribute of the image to path
-
-      const image = new FormData();
-      image.append("file", this.file);
-      image.append("upload_preset", "lwsk5njh");
-      axios
-        .post("https://api.cloudinary.com/v1_1/daakldabl/image/upload", image)
-        .then(({ data }) => {
-          console.log("imageId", data.url);
-          this.$data.imageUrl = data.url;
-          console.log("===>", this.$data.imageUrl);
-        })
-        .catch((err) => console.log(err));
+      if (this.file) {
+        const image = new FormData();
+        image.append("file", this.file);
+        image.append("upload_preset", "lwsk5njh");
+        axios
+          .post("https://api.cloudinary.com/v1_1/daakldabl/image/upload", image)
+          .then(({ data }) => {
+            console.log("imageId", data.url);
+            this.$data.imageUrl = data.url;
+            console.log("===>", this.$data.imageUrl);
+          })
+          .catch((err) => console.log(err));
+      }
     },
     uploadPictureToDataBase() {
       if (this.$data.imageUrl) {
         axios
           .post("http://localhost:3000/admin/1", { image: this.$data.imageUrl })
-          .then(({ data }) => console.log(data));
+          .then(({ data }) => {
+            console.log(data);
+            this.getAdminInfo();
+          });
       }
       console.log("clicked");
     },
@@ -364,19 +356,127 @@ export default {
           $("#" + target).show();
         });
       })
-    ),
-      axios
-        .get("http://localhost:3000/admin/img")
-        .then(({ data }) => {
-          this.$data.data = data;
-          this.$data.imageUrl = data.imageUrl;
-          console.log(data);
-        })
-        .catch((err) => console.log(err));
+    );
   },
 };
 </script>
 <style scoped>
+body {
+  font-family: sans-serif;
+  background-color: #eeeeee;
+}
+
+.file-upload {
+  background-color: #ffffff;
+  width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.file-upload-btn {
+  width: 100%;
+  margin: 0;
+  color: black;
+  background: none;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  border-bottom: 4px solid whitesmoke;
+  transition: all 0.2s ease;
+  outline: none;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.file-upload-btn:hover {
+  background: aqua;
+  color: black;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.file-upload-btn:active {
+  border: 0;
+  transition: all 0.2s ease;
+}
+
+.file-upload-content {
+  display: none;
+  text-align: center;
+}
+
+.file-upload-input {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  outline: none;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.image-upload-wrap {
+  margin-top: 20px;
+  border: 4px dashed silver;
+  position: relative;
+}
+
+.image-dropping,
+.image-upload-wrap:hover {
+  background-color: grey;
+}
+
+.image-title-wrap {
+  padding: 0 15px 15px 15px;
+  color: #222;
+}
+
+.drag-text {
+  text-align: center;
+}
+
+.drag-text h3 {
+  font-weight: 100;
+  text-transform: uppercase;
+  color: black;
+  padding: 60px 0;
+}
+
+.file-upload-image {
+  max-height: 200px;
+  max-width: 200px;
+  margin: auto;
+  padding: 20px;
+}
+
+.remove-image {
+  width: 200px;
+  margin: 0;
+  color: #fff;
+  background: #cd4535;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  border-bottom: 4px solid #b02818;
+  transition: all 0.2s ease;
+  outline: none;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.remove-image:hover {
+  background: #c13b2a;
+  color: #ffffff;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.remove-image:active {
+  border: 0;
+  transition: all 0.2s ease;
+}
+
 .inputUpload {
   width: 2px;
   font-size: 2px;

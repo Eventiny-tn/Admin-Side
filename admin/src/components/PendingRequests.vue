@@ -17,18 +17,6 @@
                 <a class="float-left"
                   ><strong>{{ event.name }}</strong></a
                 >
-                <span class="float-right"
-                  ><i class="text-warning fa fa-star"></i
-                ></span>
-                <span class="float-right"
-                  ><i class="text-warning fa fa-star"></i
-                ></span>
-                <span class="float-right"
-                  ><i class="text-warning fa fa-star"></i
-                ></span>
-                <span class="float-right"
-                  ><i class="text-warning fa fa-star"></i
-                ></span>
               </p>
               <div class="clearfix"></div>
               <p>
@@ -60,7 +48,9 @@
 
 <script>
 import axios from "axios";
-// import moment from "moment";
+import moment from "moment";
+import swal from "sweetalert";
+
 export default {
   name: "Dash",
   props: {
@@ -76,18 +66,39 @@ export default {
   methods: {
     getAllPendingRequests() {
       axios.get("http://localhost:3000/event").then(({ data }) => {
-        this.$data.events = data;
+        let currentData = [];
+        for (let i = 0; i < data.length; i++) {
+          data[i].time = moment(data[i].time).fromNow();
+          currentData.push(data[i]);
+        }
+        this.$data.events = currentData;
         console.log("==>>", data);
       });
     },
     declineEvent(id) {
-      console.log(id);
-      if (id) {
-        axios.delete("http://localhost:3000/event/" + id).then(({ data }) => {
-          console.log(data);
-          this.getAllPendingRequests();
-        });
-      }
+      swal({
+        title: "Are you sure?",
+        text: "Once deleted, you will not be able to recover this event file!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      }).then((willDelete) => {
+        if (willDelete) {
+          if (id) {
+            axios
+              .delete("http://localhost:3000/event/" + id)
+              .then(({ data }) => {
+                console.log(data);
+                this.getAllPendingRequests();
+              });
+          }
+          swal("Ok! the event has been deleted!", {
+            icon: "success",
+          });
+        } else {
+          swal("The event is safe!");
+        }
+      });
     },
     approveRequest(id) {
       if (id) {
