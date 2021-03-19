@@ -56,6 +56,44 @@
           </div>
         </li>
         <li>
+          <div v-if="updateCategory == true">
+            <div class="container">
+              <div class="row">
+                <h4 class="text-center">Update Category</h4>
+
+                <input
+                  placeholder="Name of the category"
+                  type="text"
+                  required
+                  v-model="name"
+                />
+
+                <input
+                  placeholder="discription"
+                  type="text"
+                  required
+                  v-model="description"
+                />
+                <input
+                  placeholder="image"
+                  type="file"
+                  id="file"
+                  ref="file"
+                  v-on:change="handleFileUpload()"
+                  required
+                  :v-model="image"
+                />
+                <div @click="closeAddCategoryUpdate()">
+                  <i class="ui ban icon close"></i>
+                </div>
+              </div>
+              <button class="ui button" @click="onUpdateCategory()">
+                Submit
+              </button>
+            </div>
+          </div>
+        </li>
+        <li>
           <div class="ui divider"></div>
         </li>
         <li v-for="(element, i) in data" :key="i">
@@ -67,11 +105,17 @@
               <div class="content">
                 <a class="header">{{ element.name }}</a>
 
-                <div
-                  class="right floated content"
-                  @click.prevent="deleteById(element.id)"
-                >
-                  <button class="ui negative button">
+                <div class="right floated content">
+                  <button
+                    class="ui positive basic button"
+                    @click="updateCategories(element.id)"
+                  >
+                    Update
+                  </button>
+                  <button
+                    class="ui negative button"
+                    @click.prevent="deleteById(element.id)"
+                  >
                     Delete
                   </button>
                 </div>
@@ -107,6 +151,8 @@ export default {
       name: "",
       description: "",
       image: "",
+      updateCategory: false,
+      categoryIDonUpdate: null,
     };
   },
   methods: {
@@ -122,6 +168,33 @@ export default {
     },
     closeAddCategory() {
       this.$data.viewForm = false;
+    },
+    closeAddCategoryUpdate() {
+      this.$data.updateCategory = false;
+    },
+    updateCategories(id) {
+      this.$data.updateCategory = true;
+      this.$data.categoryIDonUpdate = id;
+      console.log(this.$data.categoryIDonUpdate);
+    },
+    onUpdateCategory() {
+      if (this.$data.categoryIDonUpdate) {
+        axios
+          .put(
+            "http://localhost:3000/category/" + this.$data.categoryIDonUpdate,
+            {
+              name: this.$data.name,
+              description: this.$data.description,
+              image: this.$data.image,
+            }
+          )
+          .then(({ data }) => {
+            console.log(data);
+            this.closeAddCategoryUpdate();
+            this.getCategoryList();
+          })
+          .catch((err) => console.log(err));
+      }
     },
     onSubmitCategory() {
       if (
