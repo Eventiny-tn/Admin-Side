@@ -12,7 +12,7 @@
                     class="form-control"
                     placeholder="Search for a user"
                     id="keywords"
-                    @change="searchUsers($event.target.value)"
+                    v-model="query"
                   />
                 </div>
               </div>
@@ -21,11 +21,11 @@
                 <div class="select-container">
                   <select
                     class="custom-select"
-                    @click="filterByBanned($event.target.value)"
+                    @click="filterBydropDown($event.target.value)"
                   >
                     <option selected="" class="options">Select</option>
-                    <option value="1" class="options">Banned User</option>
-                    <option value="2" class="options">Unbanned</option>
+                    <option value="true" class="options">Banned User</option>
+                    <option value="false" class="options">Unbanned</option>
                   </select>
                 </div>
               </div>
@@ -48,7 +48,7 @@
 
             <div
               class="job-box d-md-flex align-items-center justify-content-between mb-30"
-              v-for="(user, i) in users"
+              v-for="(user, i) in filterSearch"
               :key="i"
             >
               <div class="job-left my-4 d-md-flex align-items-center flex-wrap">
@@ -58,7 +58,9 @@
                   JS
                 </div>
                 <div class="job-content">
-                  <h5 class="text-center text-md-left">{{ user.username }}</h5>
+                  <h5 class="text-center text-md-left">
+                    {{ user.username.toUpperCase() }}
+                  </h5>
                   <ul class="d-md-flex flex-wrap text-capitalize ff-open-sans">
                     <li class="mr-md-4">
                       <i class="zmdi zmdi-pin mr-2"></i> {{ user.city }}
@@ -79,6 +81,7 @@
                   class="job-right my-4 flex-shrink-0"
                   @click="banUser(user.id)"
                   v-if="user.isBanned"
+                  value="user.isBanned"
                 >
                   <a
                     class="ui positive basic button btn d-block w-100 d-sm-inline-block btn-light"
@@ -137,11 +140,12 @@ import swal from "sweetalert";
 export default {
   data() {
     return {
-      // events: this.users,
+      listOfusers: [],
       filterBanner: "",
       query: "",
     };
   },
+
   props: {
     users: {
       type: Object,
@@ -153,8 +157,31 @@ export default {
       type: Function,
     },
   },
+  computed: {
+    filterSearch: function() {
+      return this.listOfusers.filter((user) => {
+        return user.username.match(this.query) || user.isBanned;
+      });
+    },
+  },
 
   methods: {
+    // filterBydropDown(state) {
+    //   return this.listOfusers.filter((user) => {
+    //     return user.isBanned == state;
+    //   });
+    // },
+
+    getUsersAll() {
+      axios.get("http://localhost:3000/user/all").then(({ data }) => {
+        console.log("all user, getUsesAll() line:168  ", data);
+        this.listOfusers = data
+          .slice(0, data.length)
+          .sort((a, b) => a.isBanned - b.isBanned);
+        console.log("user :", data);
+      });
+    },
+
     banUser(id) {
       swal({
         title: "Are you sure?",
@@ -166,7 +193,7 @@ export default {
         if (willDelete) {
           axios.patch("http://localhost:3000/user/" + id).then(({ data }) => {
             console.log(data);
-            this.getUsersNotBanned();
+            this.getUsersAll();
           });
           swal("Thank you! The user has been banned", {
             icon: "success",
@@ -176,20 +203,9 @@ export default {
         }
       });
     },
-    // searchUsers() =>{
-    //   console.log(this.$data.query);
-    //   // if (query !== "") {
-    //   //   const arr = [];
-    //   //   this.users.map((element) => {
-    //   //     if (element.name.includes(query) !== -1) {
-    //   //       arr.push(element);
-    //   //     }
-    //   //   });
-    //   //   this.$data.events = arr;
-    //   // } else {
-    //   //   this.getUsersNotBanned();
-    //   // }
-    // },
+  },
+  created() {
+    this.getUsersAll();
   },
 };
 </script>

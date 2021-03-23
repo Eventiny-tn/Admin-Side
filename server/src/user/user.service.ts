@@ -14,6 +14,11 @@ export class UserService {
     const users = this.userRepository.find({ isBanned: false });
     return users;
   }
+  async getUsers(req): Promise<Error | object> {
+    const users = this.userRepository.find();
+    return users;
+  }
+
   async banUser(id): Promise<Error | string> {
     const user = await this.userRepository.findOne(id.id);
     if (user.isBanned == false) {

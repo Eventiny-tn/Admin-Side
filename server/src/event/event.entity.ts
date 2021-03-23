@@ -27,6 +27,8 @@ export class Events {
   caption: string;
   @Column()
   cover: string;
+  @Column()
+  description: string;
   @Column('simple-array')
   images: string;
   @Column({ default: false })
@@ -50,6 +52,7 @@ export class Events {
     caption: string,
     cover: string,
     images: string,
+    description: string,
   ) {
     this.name = name;
     this.time = time;
@@ -60,5 +63,6 @@ export class Events {
     this.caption = caption;
     this.cover = cover;
     this.images = images;
+    this.description = description;
   }
 }
