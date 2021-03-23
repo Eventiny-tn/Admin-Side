@@ -91,10 +91,10 @@
               <a><i class="ui briefcase icon"></i>Pending Requests</a>
             </li>
             <li @click.prevent="userListView()">
-              <a><i class="ui briefcase icon"></i>Users List</a>
+              <a><i class="ui user icon"></i>Users List</a>
             </li>
             <li @click.prevent="categoryListView()">
-              <a><i class="fa fa-fw fa fa-question-circle"></i>Category</a>
+              <a><i class="ui sort icon"></i>Category</a>
             </li>
             <li @click.prevent="settingsView()">
               <a><i class="fa fa-fw fa fa-question-circle"></i>Settings</a>
@@ -198,8 +198,9 @@ export default {
       setInterval(() => {
         axios.get("http://localhost:3000/event").then(({ data }) => {
           this.$data.notification = data;
+          console.log(data);
         });
-      }, 3000);
+      }, 2000);
     },
     logout() {
       localStorage.removeItem("isLogged");

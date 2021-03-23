@@ -24,6 +24,7 @@ export class EventService {
     caption,
     cover,
     categories,
+    description,
   }): Promise<Error | string> {
     if (name) {
       // await this.eventRepository.
@@ -37,6 +38,7 @@ export class EventService {
         images,
         caption,
         cover,
+        description,
       );
       try {
         event.categories = [];
