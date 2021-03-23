@@ -14,6 +14,7 @@ import { CategoryModule } from './category/category.module';
 import { EventModule } from './event/event.module';
 import { CategoryService } from './category/category.service';
 import { UserModule } from './user/user.module';
+import { PlannerRequestModule } from './planner-request/planner-request.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { UserModule } from './user/user.module';
     CategoryModule,
     EventModule,
     UserModule,
+    PlannerRequestModule,
   ],
   controllers: [AppController, AdminController, CategoryController],
   providers: [AppService, AdminsService, CategoryService],
