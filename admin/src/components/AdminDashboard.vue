@@ -35,7 +35,7 @@
             >
               <div class="ui very relaxed list">
                 <div class="item">
-                  <img class="ui avatar image" :src="element.images" />
+                  <img class="ui avatar image" :src="element.cover" />
                   <div class="content">
                     <a class="header">{{ element.name }}</a>
                     <div class="description">
@@ -219,16 +219,18 @@ export default {
       this.$data.view = 3;
     },
   },
-  // mounted() {
-  //   axios
-  //     .get("http://localhost:3000/admin/img")
-  //     .then(({ data }) => {
-  //       this.$data.data = data;
-  //       this.$data.adminImg = data.imageUrl;
-  //       console.log(data);
-  //     })
-  //     .catch((err) => console.log(err));
-  // },
+
+  mounted() {
+    console.log(("notification: ", this.$data.notification));
+    //   axios
+    //     .get("http://localhost:3000/admin/img")
+    //     .then(({ data }) => {
+    //       this.$data.data = data;
+    //       this.$data.adminImg = data.imageUrl;
+    //       console.log(data);
+    //     })
+    //     .catch((err) => console.log(err));
+  },
 };
 </script>
 <style scoped>

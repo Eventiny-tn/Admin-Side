@@ -7,7 +7,7 @@
         <div class="card-body">
           <div class="row">
             <div class="col-md-2">
-              <img :src="event.images[0]" class="img img-rounded img-fluid" />
+              <img :src="event.cover" class="img img-rounded img-fluid" />
               <p class="text-secondary text-center">
                 {{ event.time }}
               </p>
@@ -20,7 +20,7 @@
               </p>
               <div class="clearfix"></div>
               <p>
-                {{ event.cover }}
+                {{ event.caption }}
               </p>
               <p>
                 <button

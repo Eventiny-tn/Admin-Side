@@ -1,3 +1,5 @@
+import { ParticipantService } from './participant/participant.service';
+import { CommentsModule } from './comments/comments.module';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './auth/constants';
 import { AdminsModule } from './admins/admins.module';
@@ -14,6 +16,9 @@ import { CategoryModule } from './category/category.module';
 import { EventModule } from './event/event.module';
 import { CategoryService } from './category/category.service';
 import { UserModule } from './user/user.module';
+import { PlannerRequestModule } from './planner-request/planner-request.module';
+import { ImagesModule } from './images/images.module';
+import { ParticipantController } from './participant/participant.controller';
 
 @Module({
   imports: [
@@ -27,9 +32,17 @@ import { UserModule } from './user/user.module';
     CategoryModule,
     EventModule,
     UserModule,
+    PlannerRequestModule,
+    ImagesModule,
+    CommentsModule,
   ],
-  controllers: [AppController, AdminController, CategoryController],
-  providers: [AppService, AdminsService, CategoryService],
+  controllers: [
+    AppController,
+    AdminController,
+    CategoryController,
+    ParticipantController,
+  ],
+  providers: [AppService, AdminsService, CategoryService, ParticipantService],
 })
 export class AppModule {
   constructor(private connection: Connection) {}
