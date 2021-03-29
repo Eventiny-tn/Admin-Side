@@ -1,43 +1,54 @@
-import { Events } from './event.entity';
 import { Body, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, Connection } from 'typeorm';
 import { Category } from 'src/category/category.entity';
-
+import { Images } from 'src/images/images.entity';
+import { Event } from '../event/event.entity';
 @Injectable()
 export class EventService {
   constructor(
-    @InjectRepository(Events)
-    private eventRepository: Repository<Events>,
+    @InjectRepository(Event)
+    private eventRepository: Repository<Event>,
     @InjectRepository(Category)
     private categoryRepository: Repository<Category>,
     private connection: Connection,
   ) {}
   async addEvent({
     name,
-    time,
+    caption,
+    price,
+    ticket,
+    eventDate,
     dateStart,
     dateEnds,
     location,
-    price,
     images,
-    caption,
+    lat,
+    lng,
+    cover,
     categories,
+    userId,
+    description,
   }): Promise<Error | string> {
     if (name) {
       // await this.eventRepository.
-      let event = new Events(
+      let event = new Event(
         name,
-        time,
+        caption,
+        price,
+        ticket,
+        eventDate,
         dateStart,
         dateEnds,
         location,
-        price,
-        images,
-        caption,
+        lat,
+        lng,
+        cover,
+        description,
       );
       try {
         event.categories = [];
+        event.user = userId;
         // find the id of the categories by name
         for (let i = 0; i < categories.length; i++) {
           var currentObj = await this.categoryRepository.find({
@@ -47,7 +58,21 @@ export class EventService {
             event.categories.push(currentObj[0]);
           }
         }
-        await this.connection.manager.save(event);
+        let myImages = [];
+        let arrayOfPromises = [];
+        images.forEach((element) => {
+          var img = new Images(element);
+          arrayOfPromises.push(this.connection.manager.save(img));
+          myImages.push(img);
+        });
+        Promise.all(arrayOfPromises)
+          .then(() => {
+            event.images = myImages;
+            return this.connection.manager.save(event);
+          })
+          .then(() => {
+            console.log('done');
+          });
         return 'done';
       } catch (err) {
         return new NotFoundException('NOT FOUND');
