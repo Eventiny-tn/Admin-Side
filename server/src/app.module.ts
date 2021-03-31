@@ -1,3 +1,5 @@
+import { ParticipantModule } from 'src/participant/participant.module';
+import { Participant } from './participant/participant.entity';
 import { ParticipantService } from './participant/participant.service';
 import { CommentsModule } from './comments/comments.module';
 import { JwtModule } from '@nestjs/jwt';
@@ -30,19 +32,20 @@ import { ParticipantController } from './participant/participant.controller';
       signOptions: { expiresIn: '24h' },
     }),
     CategoryModule,
-    EventModule,
     UserModule,
     PlannerRequestModule,
     ImagesModule,
+    EventModule,
     CommentsModule,
+    ParticipantModule,
   ],
   controllers: [
     AppController,
     AdminController,
     CategoryController,
-    ParticipantController,
+    // ParticipantController,
   ],
-  providers: [AppService, AdminsService, CategoryService, ParticipantService],
+  providers: [AppService, AdminsService, CategoryService],
 })
 export class AppModule {
   constructor(private connection: Connection) {}

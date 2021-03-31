@@ -1,24 +1,27 @@
+import { CommentsModule } from './../comments/comments.module';
+import { ImagesModule } from './../images/images.module';
+import { CategoryModule } from './../category/category.module';
+import { UserModule } from './../user/user.module';
+import { EventModule } from 'src/event/event.module';
 import { Module } from '@nestjs/common';
 import { ParticipantService } from './participant.service';
 import { ParticipantController } from './participant.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Connection, Repository } from 'typeorm';
 import { Participant } from './participant.entity';
-import { EventModule } from 'src/event/event.module';
-import { UserModule } from 'src/user/user.module';
 import { UserService } from 'src/user/user.service';
 import { EventService } from 'src/event/event.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Participant])],
-  controllers: [ParticipantController],
-  providers: [
-    ParticipantService,
-    Repository,
-    Connection,
-    UserService,
-    EventService,
+  imports: [
+    TypeOrmModule.forFeature([Participant]),
+    EventModule,
+    UserModule,
+    CategoryModule,
+    ImagesModule,
+    CommentsModule,
   ],
-  exports: [ParticipantService],
+  controllers: [ParticipantController],
+  providers: [ParticipantService, UserService, EventService],
+  exports: [TypeOrmModule, ParticipantService],
 })
 export class ParticipantModule {}

@@ -1,9 +1,11 @@
+import { Participant } from './../participant/participant.entity';
 import { Body, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, Connection } from 'typeorm';
 import { Category } from 'src/category/category.entity';
 import { Images } from 'src/images/images.entity';
 import { Event } from '../event/event.entity';
+import { Comment } from 'src/comments/comment.entity';
 @Injectable()
 export class EventService {
   constructor(
@@ -11,6 +13,12 @@ export class EventService {
     private eventRepository: Repository<Event>,
     @InjectRepository(Category)
     private categoryRepository: Repository<Category>,
+    @InjectRepository(Images)
+    private imageRepository: Repository<Images>,
+    @InjectRepository(Participant)
+    private participantRepository: Repository<Participant>,
+    @InjectRepository(Comment)
+    private commentRepository: Repository<Comment>,
     private connection: Connection,
   ) {}
   async addEvent({
@@ -104,7 +112,16 @@ export class EventService {
   }
   async deleteOneById(id: number): Promise<Error | string> {
     if (id) {
-      await this.eventRepository.delete(id);
+      await this.imageRepository.query(
+        `delete from images where imagesId=${id};`,
+      );
+      await this.commentRepository.query(
+        `delete from comments where eventId=${id};`,
+      );
+      await this.participantRepository.query(
+        `delete from participant where eventId=${id};`,
+      );
+      await this.eventRepository.query(`delete from event where id=${id};`);
       return 'done';
     } else {
       return new NotFoundException('NOT FOUND');
