@@ -102,10 +102,12 @@ export default {
     },
     approveRequest(id) {
       if (id) {
-        axios.patch("http://localhost:3000/event/" + id).then(({ data }) => {
-          console.log(data);
-          this.getAllPendingRequests();
-        });
+        axios
+          .put("http://localhost:3000/event/approve/" + id)
+          .then(({ data }) => {
+            console.log(data);
+            this.getAllPendingRequests();
+          });
       }
     },
   },

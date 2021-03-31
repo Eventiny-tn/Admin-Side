@@ -160,7 +160,7 @@ export default {
   computed: {
     filterSearch: function() {
       return this.listOfusers.filter((user) => {
-        return user.username.match(this.query) || user.isBanned;
+        return user.username.toUpperCase().includes(this.query.toUpperCase());
       });
     },
   },
@@ -191,7 +191,7 @@ export default {
         dangerMode: true,
       }).then((willDelete) => {
         if (willDelete) {
-          axios.patch("http://localhost:3000/user/" + id).then(({ data }) => {
+          axios.put("http://localhost:3000/user/" + id).then(({ data }) => {
             console.log(data);
             this.getUsersAll();
           });

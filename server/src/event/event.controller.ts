@@ -30,10 +30,10 @@ export class EventController {
     return this.eventService.updateByid(id, body);
   }
   @Delete(':id')
-  deleteOneById(@Param() id: number): Promise<Error | string> {
+  deleteOneById(@Param('id') id: number): Promise<Error | string> {
     return this.eventService.deleteOneById(id);
   }
-  @Patch(':id')
+  @Put('/approve/:id')
   async approveEvent(@Param() id: object): Promise<Error | string> {
     return this.eventService.approveEvent(id);
   }

@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Patch, Req } from '@nestjs/common';
+import { Controller, Get, Param, Patch, Put, Req } from '@nestjs/common';
 
 import { UserService } from './user.service';
 
@@ -13,7 +13,7 @@ export class UserController {
   getUsers(@Req() req): Promise<Error | object> {
     return this.userService.getUsers(req);
   }
-  @Patch(':id')
+  @Put(':id')
   banUser(@Param() id: number): Promise<Error | string> {
     return this.userService.banUser(id);
   }
