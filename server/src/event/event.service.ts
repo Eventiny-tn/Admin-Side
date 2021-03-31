@@ -127,11 +127,11 @@ export class EventService {
       return new NotFoundException('NOT FOUND');
     }
   }
-  async approveEvent(n: object): Promise<Error | string> {
-    if (n) {
-      console.log(n);
+  async approveEvent(eventId: object): Promise<Error | string> {
+    if (eventId) {
+      console.log(eventId);
 
-      await this.eventRepository.update(n, { pending: true });
+      await this.eventRepository.update(eventId, { pending: true });
       return 'done';
     } else {
       return new NotFoundException('NOT FOUND');
