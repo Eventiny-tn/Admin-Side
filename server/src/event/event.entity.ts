@@ -19,9 +19,9 @@ import { Participant } from 'src/participant/participant.entity';
 export class Event {
   @PrimaryGeneratedColumn()
   id: number;
-  @Column({ length: 25 })
+  @Column('text')
   name: string;
-  @Column()
+  @Column('text')
   caption: string;
   @Column({ default: 'Free' })
   price: string;
@@ -41,7 +41,7 @@ export class Event {
   lng: string;
   @Column()
   cover: string;
-  @Column('varchar', { length: 10000 })
+  @Column('longtext')
   description: string;
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   time: string;

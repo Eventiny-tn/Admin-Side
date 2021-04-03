@@ -20,7 +20,7 @@ import { CategoryService } from './category/category.service';
 import { UserModule } from './user/user.module';
 import { PlannerRequestModule } from './planner-request/planner-request.module';
 import { ImagesModule } from './images/images.module';
-import { ParticipantController } from './participant/participant.controller';
+import { MarketingSolutionModule } from './marketing-solution/marketing-solution.module';
 
 @Module({
   imports: [
@@ -38,13 +38,9 @@ import { ParticipantController } from './participant/participant.controller';
     EventModule,
     CommentsModule,
     ParticipantModule,
+    MarketingSolutionModule,
   ],
-  controllers: [
-    AppController,
-    AdminController,
-    CategoryController,
-    // ParticipantController,
-  ],
+  controllers: [AppController, AdminController, CategoryController],
   providers: [AppService, AdminsService, CategoryService],
 })
 export class AppModule {
