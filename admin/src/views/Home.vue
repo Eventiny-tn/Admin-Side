@@ -18,7 +18,7 @@ export default {
   methods: {
     onSubitLogin(login) {
       axios
-        .post("http://localhost:3000/admin", login)
+        .post("http://localhost:3001/admin", login)
         .then(({ data }) => {
           if (data.auth == true) {
             localStorage.setItem("isLogged", data.token);

@@ -190,13 +190,13 @@ export default {
   },
   methods: {
     getCategoryList() {
-      axios.get("http://localhost:3000/category").then(({ data }) => {
+      axios.get("http://localhost:3001/category").then(({ data }) => {
         this.$data.data = data;
       });
     },
     getAllPendingRequests() {
       setInterval(() => {
-        axios.get("http://localhost:3000/event").then(({ data }) => {
+        axios.get("http://localhost:3001/event").then(({ data }) => {
           this.$data.notification = data;
           console.log(data);
         });

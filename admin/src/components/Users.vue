@@ -173,7 +173,7 @@ export default {
     // },
 
     getUsersAll() {
-      axios.get("http://localhost:3000/user/all").then(({ data }) => {
+      axios.get("http://localhost:3001/user/all").then(({ data }) => {
         console.log("all user, getUsesAll() line:168  ", data);
         this.listOfusers = data
           .slice(0, data.length)
@@ -191,7 +191,7 @@ export default {
         dangerMode: true,
       }).then((willDelete) => {
         if (willDelete) {
-          axios.put("http://localhost:3000/user/" + id).then(({ data }) => {
+          axios.put("http://localhost:3001/user/" + id).then(({ data }) => {
             console.log(data);
             this.getUsersAll();
           });

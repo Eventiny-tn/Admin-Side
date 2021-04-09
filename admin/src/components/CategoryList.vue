@@ -169,7 +169,7 @@ export default {
       }).then((willDelete) => {
         if (willDelete) {
           axios
-            .delete("http://localhost:3000/category/" + id)
+            .delete("http://localhost:3001/category/" + id)
             .then(({ data }) => {
               console.log(data);
               this.getCategoryList();
@@ -200,7 +200,7 @@ export default {
       if (this.$data.categoryIDonUpdate) {
         axios
           .put(
-            "http://localhost:3000/category/" + this.$data.categoryIDonUpdate,
+            "http://localhost:3001/category/" + this.$data.categoryIDonUpdate,
             {
               name: this.$data.name,
               description: this.$data.description,
@@ -222,7 +222,7 @@ export default {
         this.$data.image !== ""
       ) {
         axios
-          .post("http://localhost:3000/category", {
+          .post("http://localhost:3001/category", {
             name: this.$data.name,
             description: this.$data.description,
             image: this.$data.image,
