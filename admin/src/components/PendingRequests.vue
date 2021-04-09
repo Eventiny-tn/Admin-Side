@@ -65,7 +65,7 @@ export default {
   },
   methods: {
     getAllPendingRequests() {
-      axios.get("http://localhost:3000/event").then(({ data }) => {
+      axios.get("http://localhost:3001/event").then(({ data }) => {
         let currentData = [];
         for (let i = 0; i < data.length; i++) {
           data[i].time = moment(data[i].time).fromNow();
@@ -86,7 +86,7 @@ export default {
         if (willDelete) {
           if (id) {
             axios
-              .delete("http://localhost:3000/event/" + id)
+              .delete("http://localhost:3001/event/" + id)
               .then(({ data }) => {
                 console.log(data);
                 this.getAllPendingRequests();
@@ -103,7 +103,7 @@ export default {
     approveRequest(id) {
       if (id) {
         axios
-          .put("http://localhost:3000/event/approve/" + id)
+          .put("http://localhost:3001/event/approve/" + id)
           .then(({ data }) => {
             console.log(data);
             this.getAllPendingRequests();

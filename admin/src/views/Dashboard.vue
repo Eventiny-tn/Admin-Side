@@ -32,14 +32,14 @@ export default {
       this.$router.push("/");
     },
     getUsersNotBanned() {
-      axios.get("http://localhost:3000/user").then(({ data }) => {
+      axios.get("http://localhost:3001/user").then(({ data }) => {
         this.$data.users = data;
         console.log("user :", data);
       });
     },
     getAdminInfo() {
       axios
-        .get("http://localhost:3000/admin/img")
+        .get("http://localhost:3001/admin/img")
         .then(({ data }) => {
           this.$data.data = data;
           this.$data.adminInfo = data;
@@ -47,7 +47,7 @@ export default {
         .catch((err) => console.log(err));
     },
     filterByBanned(id) {
-      axios.get("http://localhost:3000/user/filter/" + id).then(({ data }) => {
+      axios.get("http://localhost:3001/user/filter/" + id).then(({ data }) => {
         console.log("haythem", data);
         this.$data.users = data;
       });
@@ -63,7 +63,7 @@ export default {
       headers: { Authorization: `Bearer ${token}` },
     };
     axios
-      .get("http://localhost:3000/admin/check", config)
+      .get("http://localhost:3001/admin/check", config)
       .then(({ data }) => {
         localStorage.setItem("isLogged", data.token);
       })

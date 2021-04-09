@@ -264,19 +264,11 @@ export default {
     };
   },
   methods: {
-    // loadTextFromFile(ev) {
-    //   const file = ev.target.files[0];
-    //   const reader = new FileReader();
-
-    //   reader.onload = (e) => this.$emit("load", e.target.result);
-    //   reader.readAsDataURL(file).then((t) => console.log(t));
-    //   // console.log("==>",);
-    // },
     onSubmitUpdateInfo() {
       console.log("clicked");
       if (this.$data.fullName && this.$data.username && this.$data.email) {
         axios
-          .put("http://localhost:3000/admin/updateData", {
+          .put("http://localhost:3001/admin/updateData", {
             fullName: this.$data.fullName,
             username: this.$data.username,
             email: this.$data.email,
@@ -307,7 +299,7 @@ export default {
     uploadPictureToDataBase() {
       if (this.$data.imageUrl) {
         axios
-          .post("http://localhost:3000/admin/1", { image: this.$data.imageUrl })
+          .post("http://localhost:3001/admin/1", { image: this.$data.imageUrl })
           .then(({ data }) => {
             console.log(data);
             this.getAdminInfo();
@@ -318,7 +310,7 @@ export default {
     updatePass() {
       if (this.$data.new_password == this.$data.confirm_password) {
         axios
-          .patch("http://localhost:3000/admin", {
+          .patch("http://localhost:3001/admin", {
             current_password: this.$data.current_password,
             new_password: this.$data.new_password,
           })
